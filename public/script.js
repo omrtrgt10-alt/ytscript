@@ -261,34 +261,74 @@ function initGoogleAdsense() {
 // ====================
 
 // CORS proxy for fetching YouTube data from browser
+// These proxies relay requests to bypass CORS restrictions
 const CORS_PROXIES = [
-    'https://api.allorigins.win/raw?url=',
-    'https://corsproxy.io/?',
-    'https://api.codetabs.com/v1/proxy?quest='
+    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    (url) => `https://proxy.cors.sh/${url}`,
+    (url) => `https://thingproxy.freeboard.io/fetch/${url}`
 ];
 
 let currentProxyIndex = 0;
+let useServerFallback = false;
 
 async function fetchWithCORS(url) {
+    // If server fallback mode is on, skip client-side
+    if (useServerFallback) {
+        throw new Error('Using server fallback');
+    }
+
     // Try each proxy until one works
     for (let i = 0; i < CORS_PROXIES.length; i++) {
         const proxyIndex = (currentProxyIndex + i) % CORS_PROXIES.length;
-        const proxyUrl = CORS_PROXIES[proxyIndex] + encodeURIComponent(url);
+        const proxyUrl = CORS_PROXIES[proxyIndex](url);
 
         try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
             const response = await fetch(proxyUrl, {
-                headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml' }
+                signal: controller.signal,
+                headers: {
+                    'Accept': '*/*',
+                    'Origin': window.location.origin
+                }
             });
 
+            clearTimeout(timeoutId);
+
             if (response.ok) {
-                currentProxyIndex = proxyIndex; // Remember working proxy
-                return await response.text();
+                const text = await response.text();
+                // Validate we got actual content
+                if (text && text.length > 100 && !text.includes('<!DOCTYPE html>')) {
+                    currentProxyIndex = proxyIndex;
+                    return text;
+                }
+                // If proxy returned HTML error page, continue to next
+                console.warn(`Proxy ${proxyIndex} returned invalid content`);
             }
         } catch (e) {
-            console.warn(`Proxy ${proxyIndex} failed, trying next...`);
+            console.warn(`Proxy ${proxyIndex} failed:`, e.message);
         }
     }
-    throw new Error('All proxies failed');
+    throw new Error('All CORS proxies failed');
+}
+
+// Server-side fallback function
+async function fetchFromServer(url) {
+    const response = await fetch('/api/extract', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.error || 'Server extraction failed');
+    }
+
+    return data;
 }
 
 function extractVideoId(url) {
@@ -475,6 +515,9 @@ async function handleExtract() {
     hideError();
     setLoading(true);
 
+    let data = null;
+    let method = 'unknown';
+
     try {
         const videoId = extractVideoId(url);
 
@@ -482,8 +525,31 @@ async function handleExtract() {
             throw new Error('Could not extract video ID from URL');
         }
 
-        // Client-side extraction - uses user's browser IP
-        const data = await fetchYouTubeTranscript(videoId);
+        // Strategy 1: Try client-side extraction first (uses user's IP)
+        if (!useServerFallback) {
+            try {
+                console.log('Trying client-side extraction...');
+                data = await fetchYouTubeTranscript(videoId);
+                method = 'client_side';
+                console.log('Client-side extraction succeeded!');
+            } catch (clientError) {
+                console.warn('Client-side extraction failed:', clientError.message);
+                // Fall through to server-side
+            }
+        }
+
+        // Strategy 2: Server-side fallback
+        if (!data) {
+            console.log('Trying server-side extraction...');
+            try {
+                data = await fetchFromServer(url);
+                method = 'server_side';
+                console.log('Server-side extraction succeeded!');
+            } catch (serverError) {
+                console.error('Server-side extraction failed:', serverError.message);
+                throw new Error('Unable to extract subtitles. The video may not have captions or may be restricted.');
+            }
+        }
 
         currentSubtitles = data.subtitles;
         currentVideoId = data.videoId;
@@ -494,18 +560,11 @@ async function handleExtract() {
         incrementExtractionCount();
 
         // Track success
-        trackEvent('extract_success', { method: 'client_side', video_id: videoId });
+        trackEvent('extract_success', { method, video_id: data.videoId });
 
     } catch (error) {
         console.error('Extraction error:', error);
-
-        // User-friendly error messages
-        let errorMsg = error.message;
-        if (errorMsg.includes('proxy') || errorMsg.includes('fetch')) {
-            errorMsg = 'Network error. Please check your internet connection and try again.';
-        }
-
-        showError(errorMsg);
+        showError(error.message);
         trackEvent('extract_error', { error: error.message });
     } finally {
         setLoading(false);
