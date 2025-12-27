@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | YTScript</title>
+    <meta name="description" content="The page you're looking for doesn't exist or has been moved.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-lg);
+            text-align: center;
+        }
+
+        .error-card {
+            max-width: 480px;
+            padding: var(--space-2xl);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            animation: fadeIn 0.6s var(--ease);
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: 600;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, var(--gray-600), var(--gray-400));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: var(--space-sm);
+            color: var(--white);
+        }
+
+        .error-desc {
+            color: var(--gray-500);
+            margin-bottom: var(--space-xl);
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .error-btn {
+            padding: var(--space-md) var(--space-xl);
+            font-size: 0.9375rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all var(--duration-base) var(--ease);
+            text-decoration: none;
+        }
+
+        .error-btn-primary {
+            color: var(--black);
+            background: var(--white);
+        }
+
+        .error-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+        }
+
+        .error-btn-secondary {
+            color: var(--gray-300);
+            background: var(--gray-800);
+            border: 1px solid var(--glass-border);
+        }
+
+        .error-btn-secondary:hover {
+            background: var(--gray-700);
+            color: var(--white);
+        }
+
+        .error-icon {
+            font-size: 4rem;
+            margin-bottom: var(--space-lg);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .error-footer {
+            margin-top: var(--space-xl);
+            font-size: 0.85rem;
+            color: var(--gray-600);
+        }
+
+        .error-footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .error-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="bg-noise"></div>
+
+    <main class="error-page">
+        <div class="error-card">
+            <div class="error-icon">🔍</div>
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page Not Found</h1>
+            <p class="error-desc">
+                Oops! The page you're looking for doesn't exist or has been moved.
+                Don't worry, let's get you back on track.
+            </p>
+
+            <div class="error-actions">
+                <a href="/" class="error-btn error-btn-primary">Go Home</a>
+                <a href="/blog/" class="error-btn error-btn-secondary">Read Blog</a>
+            </div>
+
+            <p class="error-footer">
+                Need help? <a href="/contact.html">Contact us</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        // Theme
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+    </script>
+</body>
+
+</html>

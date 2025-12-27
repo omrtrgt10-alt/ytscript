@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - YTScript Support</title>
+    <meta name="description"
+        content="Contact YTScript team for support, feedback, or business inquiries. We're here to help with your YouTube subtitle extraction needs.">
+    <meta name="keywords" content="contact ytscript, ytscript support, youtube subtitle help">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ytscript.com/contact.html">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .contact-page {
+            padding: 4rem 0;
+        }
+
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-content .intro {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-content h2 {
+            font-size: 1.5rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-content h3 {
+            font-size: 1.15rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .contact-content p,
+        .contact-content li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .contact-content ul,
+        .contact-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-content a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .contact-content a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .contact-content strong {
+            color: var(--text-primary);
+        }
+
+        .contact-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .contact-content th,
+        .contact-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contact-content th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .contact-content td {
+            color: var(--text-secondary);
+        }
+
+        .contact-content tr:last-child td {
+            border-bottom: none;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .contact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-card h4 {
+            margin: 0.75rem 0 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-card a {
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .contact-icon {
+            font-size: 2.5rem;
+        }
+
+        /* Issue Cards */
+        .issue-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .issue-item h4 {
+            margin-top: 0;
+            color: var(--accent);
+            font-size: 1rem;
+        }
+
+        .issue-item p,
+        .issue-item ul {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Bug Report Box */
+        .bug-report-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .bug-report-box h3 {
+            margin-top: 0;
+        }
+
+        /* Feature Request Box */
+        .feature-request-box {
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .feature-request-box h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        /* Location Box */
+        .location-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .location-box h3 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 640px) {
+            .contact-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">YTScript</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="contact-page">
+        <div class="container">
+            <div class="contact-content">
+
+                <h1>Contact Us</h1>
+
+                <p class="intro">We love hearing from our users! Whether you have a question, feedback, feature request,
+                    or just want to say hi — we're here for you.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Get in Touch -->
+                <h2>📧 Get in Touch</h2>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">💬</div>
+                        <h4>General Inquiries</h4>
+                        <a href="mailto:contact@ytscript.com">contact@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🔧</div>
+                        <h4>Technical Support</h4>
+                        <a href="mailto:support@ytscript.com">support@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">💼</div>
+                        <h4>Business & Partnerships</h4>
+                        <a href="mailto:business@ytscript.com">business@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">⚖️</div>
+                        <h4>Legal Matters</h4>
+                        <a href="mailto:legal@ytscript.com">legal@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🔒</div>
+                        <h4>Privacy Concerns</h4>
+                        <a href="mailto:privacy@ytscript.com">privacy@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">©️</div>
+                        <h4>Copyright Issues</h4>
+                        <a href="mailto:copyright@ytscript.com">copyright@ytscript.com</a>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Response Time -->
+                <h2>⏱️ Response Time</h2>
+                <p>We aim to respond to all inquiries within:</p>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Expected Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>General Questions</td>
+                            <td>24-48 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Technical Issues</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Bug Reports</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Feature Requests</td>
+                            <td>1 week</td>
+                        </tr>
+                        <tr>
+                            <td>Business Inquiries</td>
+                            <td>48-72 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Legal Matters</td>
+                            <td>48-72 hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Response times may be longer during weekends and holidays.</em></p>
+
+                <div class="section-divider"></div>
+
+                <!-- Before You Contact Us -->
+                <h2>❓ Before You Contact Us</h2>
+                <p>Many common questions are answered in our <a href="about.html#faq">FAQ section</a>.</p>
+
+                <h3>Common Issues & Solutions</h3>
+
+                <div class="issue-item">
+                    <h4>"I can't extract subtitles from a video"</h4>
+                    <ul>
+                        <li>Make sure the video has captions available (check if CC icon appears on YouTube)</li>
+                        <li>Try refreshing the page and extracting again</li>
+                        <li>Some videos have captions disabled by the creator</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"The transcript is inaccurate"</h4>
+                    <ul>
+                        <li>We retrieve existing subtitles from YouTube; we don't create them</li>
+                        <li>Auto-generated captions can have errors</li>
+                        <li>Try selecting manually-created subtitles if available</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"The website is slow"</h4>
+                    <ul>
+                        <li>Try clearing your browser cache</li>
+                        <li>Disable browser extensions temporarily</li>
+                        <li>Try a different browser</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"Export isn't working"</h4>
+                    <ul>
+                        <li>Make sure you've successfully extracted a transcript first</li>
+                        <li>Check that your browser allows downloads</li>
+                        <li>Try a different export format</li>
+                    </ul>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Report a Bug -->
+                <div class="bug-report-box">
+                    <h3>🐛 Report a Bug</h3>
+                    <p>Found something broken? Help us fix it by providing:</p>
+                    <ol>
+                        <li><strong>What happened?</strong> (Describe the issue)</li>
+                        <li><strong>What did you expect?</strong> (What should have happened)</li>
+                        <li><strong>Steps to reproduce</strong> (How can we recreate the issue)</li>
+                        <li><strong>Browser & device</strong> (Chrome on Windows, Safari on iPhone, etc.)</li>
+                        <li><strong>Screenshot</strong> (If applicable)</li>
+                    </ol>
+                    <p>Send bug reports to: <a href="mailto:support@ytscript.com">support@ytscript.com</a> with
+                        <strong>"Bug Report"</strong> in the subject line.
+                    </p>
+                </div>
+
+                <!-- Feature Request -->
+                <div class="feature-request-box">
+                    <h3>💡 Feature Requests</h3>
+                    <p>Have an idea to make YTScript better? We're all ears!</p>
+                    <p>Tell us:</p>
+                    <ul>
+                        <li>What feature would you like?</li>
+                        <li>Why would it be useful?</li>
+                        <li>How would you use it?</li>
+                    </ul>
+                    <p>Send feature requests to: <a href="mailto:contact@ytscript.com">contact@ytscript.com</a> with
+                        <strong>"Feature Request"</strong> in the subject line.
+                    </p>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Business Inquiries -->
+                <h2>🤝 Business Inquiries</h2>
+                <p>Interested in partnering with YTScript? We're open to:</p>
+                <ul>
+                    <li>Advertising partnerships</li>
+                    <li>Integration opportunities</li>
+                    <li>Content collaborations</li>
+                    <li>Media inquiries</li>
+                </ul>
+                <p>Contact: <a href="mailto:business@ytscript.com">business@ytscript.com</a></p>
+
+                <div class="section-divider"></div>
+
+                <!-- Location -->
+                <div class="location-box">
+                    <h3>📍 Location</h3>
+                    <p><strong>YTScript</strong><br>
+                        Istanbul, Turkey</p>
+                    <p><em>We're a remote-first team serving users globally.</em></p>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Feedback -->
+                <h2>💬 Feedback</h2>
+                <p>Your feedback shapes YTScript's future. Every suggestion, complaint, and compliment helps us build a
+                    better tool.</p>
+                <p>Don't hesitate to reach out — even if it's just to say thanks. Those messages make our day! 🙏</p>
+
+                <div class="section-divider"></div>
+
+                <p style="text-align: center; color: var(--text-muted);">
+                    <em>Thank you for using YTScript. We're honored to be part of your workflow.</em>
+                </p>
+
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                    <strong>Last Updated:</strong> December 27, 2024
+                </p>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📝</span>
+                    <span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>

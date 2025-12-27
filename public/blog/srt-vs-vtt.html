@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT vs VTT: Which Subtitle Format Should You Use? | YTScript Blog</title>
+    <meta name="description"
+        content="SRT vs VTT comparison guide. Learn the differences between subtitle formats, when to use each, and how to convert between them.">
+    <meta name="keywords"
+        content="SRT vs VTT, subtitle formats, SRT file, VTT file, WebVTT, SubRip, subtitle comparison, convert SRT to VTT">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SRT vs VTT: Which Subtitle Format Should You Use?">
+    <meta property="og:description"
+        content="Complete comparison of SRT and VTT subtitle formats. Technical differences, compatibility, and when to use each one.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ytscript.com/blog/srt-vs-vtt">
+
+    <!-- Article Meta -->
+    <meta property="article:published_time" content="2024-12-27">
+    <meta property="article:author" content="YTScript Team">
+    <meta property="article:section" content="Technical Guides">
+
+    <link rel="canonical" href="https://ytscript.com/blog/srt-vs-vtt">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .blog-page {
+            padding: 4rem 0;
+        }
+
+        .blog-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-category {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Article Body */
+        .article-body h2 {
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .article-body h3 {
+            font-size: 1.35rem;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .article-body h4 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .article-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .article-body ul,
+        .article-body ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body li {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .article-body a:hover {
+            text-decoration: underline;
+        }
+
+        .article-body strong {
+            color: var(--text-primary);
+        }
+
+        .article-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .article-body th,
+        .article-body td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-body th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-body td {
+            color: var(--text-secondary);
+        }
+
+        .article-body tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Code Blocks */
+        .article-body pre {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .article-body code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .article-body pre code {
+            color: var(--text-secondary);
+        }
+
+        /* Quick Answer Box */
+        .quick-answer {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quick-answer h3 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .quick-answer p {
+            margin-bottom: 0.75rem;
+        }
+
+        .quick-answer p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Format Cards */
+        .format-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .format-card h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .format-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Comparison Grid */
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .format-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .format-box.srt {
+            border-top: 4px solid #f59e0b;
+        }
+
+        .format-box.vtt {
+            border-top: 4px solid #22c55e;
+        }
+
+        .format-box h4 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .format-box pre {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout.tip {
+            border-left-color: #22c55e;
+        }
+
+        .callout.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Use Case Lists */
+        .use-case-list {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .use-case-list h4 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .use-case-list ul {
+            margin-bottom: 0;
+        }
+
+        .use-case-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        .cta-box p {
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+            text-decoration: none;
+        }
+
+        /* Related Articles */
+        .related-articles {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .related-articles h3 {
+            margin-top: 0;
+        }
+
+        .related-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .related-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .related-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .related-list a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .related-list a:hover {
+            color: var(--accent);
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .toc h4 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        /* Winner Badge */
+        .winner-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        @media (max-width: 640px) {
+            .article-title {
+                font-size: 1.75rem;
+            }
+
+            .article-body h2 {
+                font-size: 1.4rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Schema.org Article Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "SRT vs VTT: Which Subtitle Format Should You Use?",
+        "description": "Complete comparison of SRT and VTT subtitle formats. Learn the technical differences, compatibility, and when to use each format.",
+        "author": {
+            "@type": "Organization",
+            "name": "YTScript"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "YTScript",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://ytscript.com/logo.png"
+            }
+        },
+        "datePublished": "2024-12-27",
+        "dateModified": "2024-12-27",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://ytscript.com/blog/srt-vs-vtt"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">YTScript</span>
+            </a>
+            <nav class="nav">
+                <a href="/blog/" class="nav-link">Blog</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="blog-page">
+        <div class="container">
+            <div class="blog-content">
+
+                <a href="/blog/" class="back-link">← Back to Blog</a>
+
+                <!-- Article Header -->
+                <header class="article-header">
+                    <span class="article-category">Technical Guides</span>
+                    <h1 class="article-title">SRT vs VTT: Which Subtitle Format Should You Use?</h1>
+                    <div class="article-meta">
+                        <span>📅 December 27, 2024</span>
+                        <span>⏱️ 6 min read</span>
+                        <span>✍️ YTScript Team</span>
+                    </div>
+                </header>
+
+                <!-- Article Body -->
+                <article class="article-body">
+
+                    <p>If you've ever worked with subtitles, you've probably encountered different file formats. The two
+                        most common are <strong>SRT</strong> and <strong>VTT</strong> — but what's the difference, and
+                        which one should you use?</p>
+
+                    <p>In this guide, we'll break down everything you need to know about these subtitle formats,
+                        including their history, technical differences, and when to use each one.</p>
+
+                    <!-- Quick Answer -->
+                    <div class="quick-answer">
+                        <h3>⚡ Quick Answer</h3>
+                        <p><strong>Use SRT if:</strong> You're working with traditional video editing software,
+                            DVD/Blu-ray authoring, or older media players.</p>
+                        <p><strong>Use VTT if:</strong> You're working with web video, HTML5 players, streaming
+                            platforms, or need advanced styling features.</p>
+                    </div>
+
+                    <!-- Table of Contents -->
+                    <nav class="toc">
+                        <h4>📋 Table of Contents</h4>
+                        <ol>
+                            <li><a href="#what-is-srt">What is SRT?</a></li>
+                            <li><a href="#what-is-vtt">What is VTT?</a></li>
+                            <li><a href="#technical-differences">Technical Differences</a></li>
+                            <li><a href="#compatibility">Compatibility Comparison</a></li>
+                            <li><a href="#converting">Converting Between Formats</a></li>
+                            <li><a href="#when-srt">When to Use SRT</a></li>
+                            <li><a href="#when-vtt">When to Use VTT</a></li>
+                            <li><a href="#other-formats">Other Subtitle Formats</a></li>
+                            <li><a href="#best-practices">Best Practices</a></li>
+                        </ol>
+                    </nav>
+
+                    <div class="section-divider"></div>
+
+                    <!-- What is SRT -->
+                    <h2 id="what-is-srt">What is SRT?</h2>
+
+                    <div class="format-card">
+                        <h3><span class="format-badge">SRT</span> SubRip Subtitle</h3>
+                        <p>SRT stands for <strong>SubRip Subtitle</strong> format. It's named after SubRip, a free
+                            software program that extracts subtitles from DVDs.</p>
+                        <p>Created in the late 1990s, SRT is one of the oldest and most widely supported subtitle
+                            formats. Its simplicity has made it the de facto standard for subtitle distribution.</p>
+                    </div>
+
+                    <h3>File Structure</h3>
+                    <p>An SRT file contains sequential subtitle entries, each with:</p>
+                    <ol>
+                        <li>A sequential number</li>
+                        <li>Start and end timestamps</li>
+                        <li>The subtitle text</li>
+                        <li>A blank line separator</li>
+                    </ol>
+
+                    <h3>Example</h3>
+                    <pre><code>1
+00:00:01,000 --> 00:00:04,000
+Welcome to our channel!
+
+2
+00:00:04,500 --> 00:00:08,000
+Today we're going to learn about
+subtitle formats.
+
+3
+00:00:08,500 --> 00:00:12,000
+Let's get started!</code></pre>
+
+                    <h3>Key Characteristics</h3>
+                    <ul>
+                        <li><strong>File extension:</strong> .srt</li>
+                        <li><strong>Encoding:</strong> Usually UTF-8 (but can vary)</li>
+                        <li><strong>Timestamp format:</strong> HH:MM:SS,mmm (comma for milliseconds)</li>
+                        <li><strong>Styling:</strong> Limited (some players support basic HTML tags)</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- What is VTT -->
+                    <h2 id="what-is-vtt">What is VTT?</h2>
+
+                    <div class="format-card">
+                        <h3><span class="format-badge">VTT</span> Web Video Text Tracks</h3>
+                        <p>VTT stands for <strong>Web Video Text Tracks</strong>, also known as WebVTT. It was developed
+                            by the W3C (World Wide Web Consortium) as part of the HTML5 specification.</p>
+                        <p>Introduced in 2010, VTT was designed specifically for web video, addressing limitations of
+                            older formats while maintaining simplicity.</p>
+                    </div>
+
+                    <h3>File Structure</h3>
+                    <p>A VTT file starts with "WEBVTT" declaration, followed by optional metadata and subtitle cues:</p>
+                    <ol>
+                        <li>WEBVTT header (required)</li>
+                        <li>Optional metadata/comments</li>
+                        <li>Cue identifier (optional)</li>
+                        <li>Start and end timestamps</li>
+                        <li>The subtitle text</li>
+                        <li>A blank line separator</li>
+                    </ol>
+
+                    <h3>Example</h3>
+                    <pre><code>WEBVTT
+
+NOTE This is a comment
+
+1
+00:00:01.000 --> 00:00:04.000
+Welcome to our channel!
+
+2
+00:00:04.500 --> 00:00:08.000
+Today we're going to learn about
+subtitle formats.
+
+3
+00:00:08.500 --> 00:00:12.000
+Let's get started!</code></pre>
+
+                    <h3>Key Characteristics</h3>
+                    <ul>
+                        <li><strong>File extension:</strong> .vtt</li>
+                        <li><strong>Encoding:</strong> UTF-8 (required)</li>
+                        <li><strong>Timestamp format:</strong> HH:MM:SS.mmm (period for milliseconds)</li>
+                        <li><strong>Styling:</strong> Advanced (CSS-like styling, positioning, colors)</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Technical Differences -->
+                    <h2 id="technical-differences">Technical Differences</h2>
+
+                    <h3>Timestamp Format</h3>
+                    <p>This is the most obvious difference:</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Format</th>
+                                <th>Separator</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SRT</td>
+                                <td>Comma (,)</td>
+                                <td><code>00:00:01,500</code></td>
+                            </tr>
+                            <tr>
+                                <td>VTT</td>
+                                <td>Period (.)</td>
+                                <td><code>00:00:01.500</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout warning">
+                        <h4>⚠️ Why it matters</h4>
+                        <p>If you try to use an SRT file as VTT (or vice versa) without converting, the timestamps won't
+                            be recognized.</p>
+                    </div>
+
+                    <h3>File Header</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Format</th>
+                                <th>Header Required</th>
+                                <th>Header Format</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SRT</td>
+                                <td>No</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>VTT</td>
+                                <td>Yes</td>
+                                <td>"WEBVTT" on first line</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="callout tip">
+                        <h4>💡 Pro tip</h4>
+                        <p>You can quickly identify a file's format by opening it in a text editor and checking the
+                            first line.</p>
+                    </div>
+
+                    <h3>Styling Capabilities</h3>
+
+                    <div class="comparison-grid">
+                        <div class="format-box srt">
+                            <h4>SRT Styling (Limited)</h4>
+                            <p>Some players support basic HTML-like tags:</p>
+                            <pre><code>&lt;b&gt;Bold text&lt;/b&gt;
+&lt;i&gt;Italic text&lt;/i&gt;
+&lt;font color="red"&gt;Red&lt;/font&gt;</code></pre>
+                            <p><em>But support varies widely between players.</em></p>
+                        </div>
+                        <div class="format-box vtt">
+                            <h4>VTT Styling (Advanced)</h4>
+                            <p>VTT supports CSS-like styling:</p>
+                            <pre><code>STYLE
+::cue {
+  background: rgba(0,0,0,0.8);
+  color: white;
+}</code></pre>
+                            <p><em>Plus positioning, alignment, and more.</em></p>
+                        </div>
+                    </div>
+
+                    <h3>Positioning</h3>
+                    <ul>
+                        <li><strong>SRT:</strong> No positioning support. Subtitles appear in the default location
+                            (usually bottom center).</li>
+                        <li><strong>VTT:</strong> Supports positioning using cue settings like
+                            <code>position:90% align:right</code></li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Compatibility -->
+                    <h2 id="compatibility">Compatibility Comparison</h2>
+
+                    <h3>Video Editing Software</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Software</th>
+                                <th>SRT</th>
+                                <th>VTT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Adobe Premiere Pro</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>Final Cut Pro</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>DaVinci Resolve</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>iMovie</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                            </tr>
+                            <tr>
+                                <td>Windows Movie Maker</td>
+                                <td>✅</td>
+                                <td>❌</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Verdict:</strong> SRT has broader support in traditional video editing software.</p>
+
+                    <h3>Web & Streaming</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Platform</th>
+                                <th>SRT</th>
+                                <th>VTT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>HTML5 &lt;video&gt;</td>
+                                <td>❌</td>
+                                <td>✅ <span class="winner-badge">Native</span></td>
+                            </tr>
+                            <tr>
+                                <td>YouTube</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>Vimeo</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                            <tr>
+                                <td>Twitch</td>
+                                <td>✅</td>
+                                <td>✅</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Verdict:</strong> VTT is the native format for HTML5 web video.</p>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Converting -->
+                    <h2 id="converting">Converting Between Formats</h2>
+
+                    <h3>SRT to VTT</h3>
+                    <p>The conversion is straightforward:</p>
+                    <ol>
+                        <li>Add "WEBVTT" header at the beginning</li>
+                        <li>Replace commas with periods in timestamps</li>
+                        <li>Save as .vtt</li>
+                    </ol>
+
+                    <div class="comparison-grid">
+                        <div class="format-box srt">
+                            <h4>SRT (Before)</h4>
+                            <pre><code>1
+00:00:01,500 --> 00:00:04,000
+Hello world</code></pre>
+                        </div>
+                        <div class="format-box vtt">
+                            <h4>VTT (After)</h4>
+                            <pre><code>WEBVTT
+
+1
+00:00:01.500 --> 00:00:04.000
+Hello world</code></pre>
+                        </div>
+                    </div>
+
+                    <h3>Tools for Conversion</h3>
+                    <ul>
+                        <li><strong>YTScript:</strong> Export in either format directly</li>
+                        <li><strong>Subtitle Edit:</strong> Free desktop software</li>
+                        <li><strong>Online converters:</strong> Various web tools available</li>
+                        <li><strong>FFmpeg:</strong> Command-line conversion</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- When SRT -->
+                    <h2 id="when-srt">When to Use SRT</h2>
+
+                    <div class="use-case-list">
+                        <h4>Choose SRT when:</h4>
+                        <ul>
+                            <li>✅ Working with traditional video editing software</li>
+                            <li>✅ Creating subtitles for DVD/Blu-ray</li>
+                            <li>✅ Maximum compatibility is important</li>
+                            <li>✅ Target audience uses older media players</li>
+                            <li>✅ Simple subtitles without styling needed</li>
+                            <li>✅ Sharing files with others (universal format)</li>
+                        </ul>
+                    </div>
+
+                    <h3>Best Use Cases for SRT</h3>
+                    <ol>
+                        <li><strong>Film and TV production</strong> — Industry standard</li>
+                        <li><strong>DVD authoring</strong> — Native support</li>
+                        <li><strong>Personal media libraries</strong> — Works everywhere</li>
+                        <li><strong>Subtitle translation</strong> — Simple format for translators</li>
+                        <li><strong>Archive purposes</strong> — Widely supported, future-proof</li>
+                    </ol>
+
+                    <div class="section-divider"></div>
+
+                    <!-- When VTT -->
+                    <h2 id="when-vtt">When to Use VTT</h2>
+
+                    <div class="use-case-list">
+                        <h4>Choose VTT when:</h4>
+                        <ul>
+                            <li>✅ Building web applications with HTML5 video</li>
+                            <li>✅ Need advanced styling (colors, positioning)</li>
+                            <li>✅ Working with modern streaming platforms</li>
+                            <li>✅ Creating accessible web content</li>
+                            <li>✅ Need metadata or chapter markers</li>
+                            <li>✅ Targeting mobile web browsers</li>
+                        </ul>
+                    </div>
+
+                    <h3>Best Use Cases for VTT</h3>
+                    <ol>
+                        <li><strong>Web development</strong> — Native HTML5 support</li>
+                        <li><strong>Online courses</strong> — Styling for educational content</li>
+                        <li><strong>Corporate video</strong> — Professional web presentations</li>
+                        <li><strong>Accessibility compliance</strong> — WCAG requirements</li>
+                        <li><strong>Interactive video</strong> — Advanced features needed</li>
+                    </ol>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Other Formats -->
+                    <h2 id="other-formats">Other Subtitle Formats</h2>
+
+                    <p>While SRT and VTT are the most common, you might encounter others:</p>
+
+                    <h3>ASS/SSA (Advanced SubStation Alpha)</h3>
+                    <ul>
+                        <li>Complex styling and effects</li>
+                        <li>Popular in anime fansubbing</li>
+                        <li>Karaoke-style effects</li>
+                        <li>Not widely supported outside niche players</li>
+                    </ul>
+
+                    <h3>TTML (Timed Text Markup Language)</h3>
+                    <ul>
+                        <li>XML-based format</li>
+                        <li>Used in broadcast industry</li>
+                        <li>Netflix and Amazon use variants</li>
+                        <li>Complex but powerful</li>
+                    </ul>
+
+                    <h3>JSON</h3>
+                    <ul>
+                        <li>Custom format for developers</li>
+                        <li>Easy to parse programmatically</li>
+                        <li>Used in APIs and applications</li>
+                        <li>YTScript offers this option</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Best Practices -->
+                    <h2 id="best-practices">Best Practices</h2>
+
+                    <h3>General Tips</h3>
+                    <ol>
+                        <li><strong>Always use UTF-8 encoding</strong> — Prevents character issues</li>
+                        <li><strong>Keep timing accurate</strong> — Check sync before delivery</li>
+                        <li><strong>Test across platforms</strong> — Ensure compatibility</li>
+                        <li><strong>Include language metadata</strong> — Helps with organization</li>
+                        <li><strong>Back up original files</strong> — Before making changes</li>
+                    </ol>
+
+                    <div class="callout">
+                        <h4>💡 For SRT</h4>
+                        <ul>
+                            <li>Don't rely on HTML styling — Support varies</li>
+                            <li>Keep entries numbered sequentially — Some players require it</li>
+                            <li>Use standard timestamp format — HH:MM:SS,mmm</li>
+                        </ul>
+                    </div>
+
+                    <div class="callout">
+                        <h4>💡 For VTT</h4>
+                        <ul>
+                            <li>Always include WEBVTT header — Required for validity</li>
+                            <li>Test styling in target player — Not all support full spec</li>
+                            <li>Validate before publishing — W3C validator available</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Conclusion -->
+                    <h2>Conclusion</h2>
+
+                    <p>Both SRT and VTT are excellent subtitle formats, each with their strengths:</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Winner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Compatibility</td>
+                                <td><strong>SRT</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Web Use</td>
+                                <td><strong>VTT</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Styling</td>
+                                <td><strong>VTT</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Simplicity</td>
+                                <td>Tie</td>
+                            </tr>
+                            <tr>
+                                <td>Industry Standard</td>
+                                <td><strong>SRT</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Future-Proof</td>
+                                <td><strong>VTT</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p><strong>Bottom line:</strong></p>
+                    <ul>
+                        <li>Use <strong>SRT</strong> for maximum compatibility and traditional video workflows</li>
+                        <li>Use <strong>VTT</strong> for web video and when you need advanced features</li>
+                    </ul>
+
+                    <p>With YTScript, you can export transcripts in both formats — so you can always have the right file
+                        for the job.</p>
+
+                    <!-- CTA -->
+                    <div class="cta-box">
+                        <h3>Need subtitles in both formats?</h3>
+                        <p>YTScript lets you export in SRT, VTT, TXT, and JSON — completely free.</p>
+                        <a href="/" class="cta-button">Try YTScript Free →</a>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>📚 Related Articles</h3>
+                        <ul class="related-list">
+                            <li><a href="how-to-download-youtube-subtitles.html">→ How to Download YouTube Subtitles:
+                                    Complete Guide</a></li>
+                            <li><a href="#">→ Adding Subtitles to Your Videos: A Beginner's Guide</a></li>
+                            <li><a href="#">→ Why Video Accessibility Matters</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <p style="text-align: center; color: var(--text-muted);">
+                        <em>Have questions? Check our <a href="/about.html#faq">FAQ</a> or <a
+                                href="/contact.html">contact us</a>.</em>
+                    </p>
+
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📝</span>
+                    <span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="/blog/">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - YTScript</title>
+    <meta name="description"
+        content="Terms and conditions for using YTScript, the free YouTube subtitle downloader. Read our service agreement and usage policies.">
+    <meta name="keywords" content="ytscript terms, terms of service, usage policy">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ytscript.com/terms.html">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .legal-page {
+            padding: 4rem 0;
+        }
+
+        .legal-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .legal-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .legal-content .updated {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .legal-content .intro {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .legal-content h2 {
+            font-size: 1.5rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .legal-content h3 {
+            font-size: 1.15rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .legal-content h4 {
+            font-size: 1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .legal-content p,
+        .legal-content li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .legal-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .legal-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .legal-content a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .legal-content a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .legal-content strong {
+            color: var(--text-primary);
+        }
+
+        .legal-content hr {
+            border: none;
+            height: 1px;
+            background: var(--border);
+            margin: 3rem 0;
+        }
+
+        .legal-content .legal-notice {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0 3rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .toc ol {
+            padding-left: 1.25rem;
+            margin: 0;
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+            break-inside: avoid;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        .acknowledgment-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .acknowledgment-box p {
+            margin-bottom: 0.75rem;
+        }
+
+        .acknowledgment-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 640px) {
+            .legal-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .legal-content h2 {
+                font-size: 1.25rem;
+            }
+
+            .toc ol {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">YTScript</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="legal-page">
+        <div class="container">
+            <div class="legal-content">
+                <h1>Terms of Service</h1>
+                <p class="updated"><strong>Last Updated:</strong> December 27, 2024</p>
+
+                <p class="intro">Welcome to YTScript! These Terms of Service ("Terms") govern your access to and use of
+                    the YTScript website, applications, and services (collectively, the "Service") operated by YTScript
+                    ("we," "us," or "our").</p>
+
+                <p>Please read these Terms carefully before using our Service. By accessing or using YTScript, you agree
+                    to be bound by these Terms and our <a href="privacy.html">Privacy Policy</a>. If you do not agree to
+                    these Terms, you may not access or use the Service.</p>
+
+                <!-- Table of Contents -->
+                <nav class="toc">
+                    <h3>Table of Contents</h3>
+                    <ol>
+                        <li><a href="#acceptance">Acceptance of Terms</a></li>
+                        <li><a href="#description">Description of Service</a></li>
+                        <li><a href="#eligibility">User Eligibility</a></li>
+                        <li><a href="#acceptable-use">Acceptable Use</a></li>
+                        <li><a href="#ip">Intellectual Property</a></li>
+                        <li><a href="#privacy">Privacy and Data</a></li>
+                        <li><a href="#advertising">Advertising</a></li>
+                        <li><a href="#disclaimers">Disclaimers</a></li>
+                        <li><a href="#liability">Limitation of Liability</a></li>
+                        <li><a href="#indemnification">Indemnification</a></li>
+                        <li><a href="#disputes">Dispute Resolution</a></li>
+                        <li><a href="#termination">Termination</a></li>
+                        <li><a href="#general">General Provisions</a></li>
+                        <li><a href="#contact">Contact Information</a></li>
+                        <li><a href="#acknowledgment">Acknowledgment</a></li>
+                    </ol>
+                </nav>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 1 -->
+                <h2 id="acceptance">1. Acceptance of Terms</h2>
+
+                <h3>1.1 Agreement to Terms</h3>
+                <p>By accessing, browsing, or using our Service in any way, you acknowledge that you have read,
+                    understood, and agree to be bound by these Terms. This agreement is effective as of the date you
+                    first access the Service.</p>
+
+                <h3>1.2 Modifications to Terms</h3>
+                <p>We reserve the right to modify these Terms at any time at our sole discretion. When we make changes:
+                </p>
+                <ul>
+                    <li>We will update the "Last Updated" date at the top of this page</li>
+                    <li>Material changes may be announced via a notice on our website</li>
+                    <li>Your continued use of the Service after any modifications constitutes acceptance of the new
+                        Terms</li>
+                </ul>
+                <p>We encourage you to review these Terms periodically. If you do not agree to the modified Terms, you
+                    must stop using the Service.</p>
+
+                <h3>1.3 Additional Terms</h3>
+                <p>Certain features or services may be subject to additional terms and conditions. By using those
+                    features, you agree to those additional terms, which are incorporated into these Terms by reference.
+                </p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 2 -->
+                <h2 id="description">2. Description of Service</h2>
+
+                <h3>2.1 What YTScript Does</h3>
+                <p>YTScript is a free online tool that allows users to extract subtitles and transcripts from YouTube
+                    videos. Our Service provides:</p>
+                <ul>
+                    <li><strong>Subtitle Extraction:</strong> Retrieve available subtitles/closed captions from YouTube
+                        videos</li>
+                    <li><strong>Multiple Export Formats:</strong> Download transcripts in TXT, SRT, VTT, and JSON
+                        formats</li>
+                    <li><strong>Timestamp Options:</strong> View transcripts with or without timestamps</li>
+                    <li><strong>Recent History:</strong> Access your recent extractions (stored locally in your browser)
+                    </li>
+                </ul>
+
+                <h3>2.2 Service Availability</h3>
+                <p>We strive to provide reliable and continuous access to our Service. However:</p>
+                <ul>
+                    <li>The Service is provided "as is" and "as available"</li>
+                    <li>We do not guarantee uninterrupted, error-free, or secure access</li>
+                    <li>We may suspend, modify, or discontinue the Service (or any part) at any time without notice</li>
+                    <li>We are not liable for any interruption, modification, or discontinuation of the Service</li>
+                </ul>
+
+                <h3>2.3 Third-Party Dependencies</h3>
+                <p>Our Service depends on third-party services, including YouTube. We are not responsible for:</p>
+                <ul>
+                    <li>Changes to YouTube's API, terms, or functionality</li>
+                    <li>Unavailability of subtitles for specific videos</li>
+                    <li>YouTube's decisions regarding content availability</li>
+                    <li>Any third-party service outages or changes</li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 3 -->
+                <h2 id="eligibility">3. User Eligibility</h2>
+
+                <h3>3.1 Age Requirements</h3>
+                <p>You must be at least 13 years old (or the minimum age of digital consent in your jurisdiction) to use
+                    our Service. By using YTScript, you represent and warrant that you meet this age requirement.</p>
+                <p>If you are under 18 (or the age of majority in your jurisdiction), you must have permission from a
+                    parent or legal guardian to use the Service.</p>
+
+                <h3>3.2 Account Requirements</h3>
+                <p>Currently, YTScript does not require user accounts. However, if we implement account features in the
+                    future:</p>
+                <ul>
+                    <li>You must provide accurate and complete information</li>
+                    <li>You are responsible for maintaining the security of your account</li>
+                    <li>You must not share your account credentials with others</li>
+                    <li>You must notify us immediately of any unauthorized access</li>
+                </ul>
+
+                <h3>3.3 Compliance with Laws</h3>
+                <p>You represent and warrant that your use of the Service will comply with all applicable laws,
+                    regulations, and these Terms.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 4 -->
+                <h2 id="acceptable-use">4. Acceptable Use</h2>
+
+                <h3>4.1 Permitted Use</h3>
+                <p>You may use YTScript for lawful purposes only. Permitted uses include:</p>
+                <ul>
+                    <li>Extracting subtitles for personal reference or study</li>
+                    <li>Creating transcripts for accessibility purposes</li>
+                    <li>Educational and research activities</li>
+                    <li>Content creation with proper attribution to original creators</li>
+                    <li>Any other lawful purpose consistent with these Terms</li>
+                </ul>
+
+                <h3>4.2 Prohibited Conduct</h3>
+                <p>You agree NOT to:</p>
+
+                <h4>Regarding Content:</h4>
+                <ul>
+                    <li>Extract subtitles for the purpose of copyright infringement</li>
+                    <li>Redistribute extracted content without proper authorization</li>
+                    <li>Use extracted content to create derivative works that violate copyright</li>
+                    <li>Claim ownership of content created by others</li>
+                </ul>
+
+                <h4>Regarding the Service:</h4>
+                <ul>
+                    <li>Attempt to gain unauthorized access to our systems or networks</li>
+                    <li>Use automated tools, bots, or scripts to access the Service excessively</li>
+                    <li>Interfere with or disrupt the Service or servers</li>
+                    <li>Circumvent any security measures or access restrictions</li>
+                    <li>Reverse engineer, decompile, or disassemble any part of the Service</li>
+                    <li>Remove, alter, or obscure any proprietary notices</li>
+                </ul>
+
+                <h4>Regarding Other Users:</h4>
+                <ul>
+                    <li>Impersonate any person or entity</li>
+                    <li>Harass, threaten, or harm others</li>
+                    <li>Collect or harvest user information without consent</li>
+                    <li>Engage in any fraudulent or deceptive activity</li>
+                </ul>
+
+                <h4>Regarding Legal Compliance:</h4>
+                <ul>
+                    <li>Violate any applicable laws or regulations</li>
+                    <li>Infringe upon intellectual property rights</li>
+                    <li>Violate export control laws</li>
+                    <li>Engage in any activity that could expose us to legal liability</li>
+                </ul>
+
+                <h3>4.3 Rate Limiting</h3>
+                <p>To ensure fair access for all users and prevent abuse:</p>
+                <ul>
+                    <li>We may implement rate limits on extraction requests</li>
+                    <li>Excessive use may result in temporary or permanent restrictions</li>
+                    <li>Automated bulk extraction is prohibited without prior authorization</li>
+                </ul>
+
+                <h3>4.4 Enforcement</h3>
+                <p>We reserve the right to:</p>
+                <ul>
+                    <li>Investigate suspected violations of these Terms</li>
+                    <li>Take appropriate action, including blocking access</li>
+                    <li>Report illegal activities to law enforcement</li>
+                    <li>Cooperate with legal investigations</li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 5 -->
+                <h2 id="ip">5. Intellectual Property</h2>
+
+                <h3>5.1 Our Intellectual Property</h3>
+                <p>The Service, including its design, features, functionality, code, graphics, logos, and trademarks, is
+                    owned by YTScript and protected by intellectual property laws.</p>
+                <p><strong>You may NOT:</strong></p>
+                <ul>
+                    <li>Copy, modify, or distribute our proprietary materials</li>
+                    <li>Use our trademarks without prior written permission</li>
+                    <li>Create derivative works based on our Service</li>
+                    <li>Use our intellectual property for commercial purposes without authorization</li>
+                </ul>
+
+                <h3>5.2 Third-Party Content</h3>
+                <h4>YouTube Content:</h4>
+                <ul>
+                    <li>Subtitles and transcripts extracted through our Service are the property of their respective
+                        copyright holders (video creators, YouTube, etc.)</li>
+                    <li>We do not claim ownership of any third-party content</li>
+                    <li>Your use of extracted content is subject to YouTube's Terms of Service and applicable copyright
+                        laws</li>
+                </ul>
+
+                <h4>User Responsibility:</h4>
+                <ul>
+                    <li>You are solely responsible for ensuring your use of extracted content complies with copyright
+                        laws</li>
+                    <li>You must obtain necessary permissions before using content commercially</li>
+                    <li>You must provide proper attribution where required</li>
+                </ul>
+
+                <h3>5.3 Fair Use Notice</h3>
+                <p>Our Service may facilitate access to copyrighted material under the doctrine of fair use. Fair use
+                    allows limited use of copyrighted material for purposes such as:</p>
+                <ul>
+                    <li>Criticism and commentary</li>
+                    <li>News reporting</li>
+                    <li>Teaching and education</li>
+                    <li>Research and scholarship</li>
+                </ul>
+                <p>However, fair use has limitations. You are responsible for determining whether your specific use
+                    qualifies as fair use under applicable law.</p>
+
+                <h3>5.4 Copyright Complaints (DMCA)</h3>
+                <p>If you believe that content available through our Service infringes your copyright, please contact us
+                    with:</p>
+                <ul>
+                    <li>Identification of the copyrighted work</li>
+                    <li>Identification of the allegedly infringing material</li>
+                    <li>Your contact information</li>
+                    <li>A statement of good faith belief</li>
+                    <li>A statement of accuracy under penalty of perjury</li>
+                    <li>Your physical or electronic signature</li>
+                </ul>
+                <p>Send copyright notices to: <a href="mailto:copyright@ytscript.com">copyright@ytscript.com</a></p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 6 -->
+                <h2 id="privacy">6. Privacy and Data</h2>
+
+                <h3>6.1 Privacy Policy</h3>
+                <p>Your use of the Service is also governed by our <a href="privacy.html">Privacy Policy</a>, which is
+                    incorporated into these Terms by reference. Please review our Privacy Policy to understand how we
+                    collect, use, and protect your information.</p>
+
+                <h3>6.2 Data Collection</h3>
+                <p>We collect certain information as described in our Privacy Policy, including:</p>
+                <ul>
+                    <li>Usage data and analytics</li>
+                    <li>Device and browser information</li>
+                    <li>Information you provide voluntarily</li>
+                </ul>
+
+                <h3>6.3 Cookies and Tracking</h3>
+                <p>We use cookies and similar technologies for:</p>
+                <ul>
+                    <li>Essential site functionality</li>
+                    <li>Analytics and performance monitoring</li>
+                    <li>Advertising (through Google AdSense)</li>
+                </ul>
+                <p>By using our Service, you consent to our use of cookies as described in our Privacy Policy.</p>
+
+                <h3>6.4 Local Storage</h3>
+                <p>Your extraction history is stored locally in your browser. We do not have access to this data, and
+                    you can clear it at any time through your browser settings.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 7 -->
+                <h2 id="advertising">7. Advertising</h2>
+
+                <h3>7.1 Third-Party Advertisements</h3>
+                <p>Our Service displays advertisements provided by third-party advertising networks, including Google
+                    AdSense. These advertisements help support our free Service.</p>
+
+                <h3>7.2 Ad Content</h3>
+                <p>We do not control the content of third-party advertisements. We are not responsible for:</p>
+                <ul>
+                    <li>The accuracy or reliability of advertised products/services</li>
+                    <li>Any transactions between you and advertisers</li>
+                    <li>Any claims, damages, or losses resulting from advertiser interactions</li>
+                </ul>
+
+                <h3>7.3 Ad Blocking</h3>
+                <p>While you may use ad-blocking software, please understand that advertising revenue enables us to
+                    provide the Service for free. We appreciate users who support our Service by allowing ads.</p>
+
+                <h3>7.4 Personalized Advertising</h3>
+                <p>Third-party advertisers may use cookies and tracking technologies to serve personalized ads based on
+                    your browsing behavior. You can opt out of personalized advertising through:</p>
+                <ul>
+                    <li><a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads
+                            Settings</a></li>
+                    <li><a href="https://www.networkadvertising.org/choices/" target="_blank" rel="noopener">Network
+                            Advertising Initiative</a></li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 8 -->
+                <h2 id="disclaimers">8. Disclaimers</h2>
+
+                <h3>8.1 "As Is" Basis</h3>
+                <div class="legal-notice">
+                    <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+                        EITHER EXPRESS OR IMPLIED.</p>
+                </div>
+
+                <h3>8.2 No Warranties</h3>
+                <p>TO THE FULLEST EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO:</p>
+                <ul>
+                    <li><strong>MERCHANTABILITY:</strong> We do not warrant that the Service is fit for any particular
+                        purpose</li>
+                    <li><strong>FITNESS FOR PURPOSE:</strong> We do not guarantee the Service will meet your specific
+                        requirements</li>
+                    <li><strong>NON-INFRINGEMENT:</strong> We do not warrant that the Service does not infringe
+                        third-party rights</li>
+                    <li><strong>ACCURACY:</strong> We do not guarantee the accuracy, completeness, or reliability of any
+                        content</li>
+                    <li><strong>SECURITY:</strong> We do not warrant that the Service will be secure or free from
+                        viruses</li>
+                    <li><strong>AVAILABILITY:</strong> We do not guarantee uninterrupted or error-free access</li>
+                </ul>
+
+                <h3>8.3 Third-Party Services</h3>
+                <p>We disclaim all liability for third-party services, including:</p>
+                <ul>
+                    <li>YouTube API functionality and availability</li>
+                    <li>Accuracy of subtitles provided by YouTube</li>
+                    <li>Third-party website links and content</li>
+                    <li>Advertiser products and services</li>
+                </ul>
+
+                <h3>8.4 Your Responsibilities</h3>
+                <p>You acknowledge and agree that:</p>
+                <ul>
+                    <li>You use the Service at your own risk</li>
+                    <li>You are responsible for your use of extracted content</li>
+                    <li>You will verify the accuracy of any transcripts before relying on them</li>
+                    <li>You will comply with all applicable laws and third-party terms</li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 9 -->
+                <h2 id="liability">9. Limitation of Liability</h2>
+
+                <h3>9.1 Exclusion of Damages</h3>
+                <div class="legal-notice">
+                    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL YTSCRIPT, ITS OFFICERS,
+                        DIRECTORS, EMPLOYEES, AGENTS, OR AFFILIATES BE LIABLE FOR:</p>
+                </div>
+                <ul>
+                    <li><strong>INDIRECT DAMAGES:</strong> Including incidental, consequential, special, or punitive
+                        damages</li>
+                    <li><strong>LOST PROFITS:</strong> Any loss of profits, revenue, or business opportunities</li>
+                    <li><strong>DATA LOSS:</strong> Any loss of data or information</li>
+                    <li><strong>BUSINESS INTERRUPTION:</strong> Any interruption to your business activities</li>
+                    <li><strong>THIRD-PARTY CLAIMS:</strong> Any claims by third parties</li>
+                </ul>
+                <p>This applies regardless of the theory of liability (contract, tort, negligence, or otherwise) and
+                    even if we have been advised of the possibility of such damages.</p>
+
+                <h3>9.2 Cap on Liability</h3>
+                <p>TO THE EXTENT PERMITTED BY LAW, OUR TOTAL LIABILITY FOR ANY CLAIMS ARISING FROM OR RELATED TO THE
+                    SERVICE SHALL NOT EXCEED THE GREATER OF:</p>
+                <ul>
+                    <li>The amount you paid to us (if any) in the 12 months preceding the claim, or</li>
+                    <li>One hundred US dollars ($100)</li>
+                </ul>
+
+                <h3>9.3 Essential Purpose</h3>
+                <p>SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF CERTAIN DAMAGES. IN SUCH
+                    JURISDICTIONS, OUR LIABILITY SHALL BE LIMITED TO THE MAXIMUM EXTENT PERMITTED BY LAW.</p>
+
+                <h3>9.4 Basis of the Bargain</h3>
+                <p>You acknowledge that the disclaimers and limitations in Sections 8 and 9 are essential elements of
+                    the agreement between us and reflect a fair allocation of risk. Our willingness to provide the
+                    Service for free relies on these limitations.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 10 -->
+                <h2 id="indemnification">10. Indemnification</h2>
+
+                <h3>10.1 Your Indemnification Obligations</h3>
+                <p>You agree to indemnify, defend, and hold harmless YTScript and its officers, directors, employees,
+                    agents, affiliates, successors, and assigns from and against any and all claims, damages, losses,
+                    liabilities, costs, and expenses (including reasonable attorneys' fees) arising from or related to:
+                </p>
+                <ul>
+                    <li>Your use of the Service</li>
+                    <li>Your violation of these Terms</li>
+                    <li>Your violation of any third-party rights, including intellectual property rights</li>
+                    <li>Your violation of any applicable laws</li>
+                    <li>Any content you submit or share through the Service</li>
+                    <li>Any misrepresentation made by you</li>
+                </ul>
+
+                <h3>10.2 Our Rights</h3>
+                <p>We reserve the right to:</p>
+                <ul>
+                    <li>Assume exclusive defense and control of any matter subject to indemnification</li>
+                    <li>Require your cooperation in the defense</li>
+                    <li>Approve any settlement that may affect our rights or obligations</li>
+                </ul>
+                <p>You agree not to settle any claim without our prior written consent.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 11 -->
+                <h2 id="disputes">11. Dispute Resolution</h2>
+
+                <h3>11.1 Informal Resolution</h3>
+                <p>Before initiating formal legal proceedings, you agree to first contact us at <a
+                        href="mailto:legal@ytscript.com">legal@ytscript.com</a> to attempt to resolve any dispute
+                    informally. We will make good faith efforts to resolve the dispute within 30 days.</p>
+
+                <h3>11.2 Governing Law</h3>
+                <p>These Terms shall be governed by and construed in accordance with the laws of Turkey, without regard
+                    to its conflict of law principles.</p>
+
+                <h3>11.3 Jurisdiction</h3>
+                <p>Any disputes arising from or related to these Terms or the Service that cannot be resolved informally
+                    shall be subject to the exclusive jurisdiction of the courts located in Istanbul, Turkey.</p>
+
+                <h3>11.4 Waiver of Class Actions</h3>
+                <div class="legal-notice">
+                    <p>TO THE EXTENT PERMITTED BY LAW, YOU AGREE THAT ANY DISPUTE RESOLUTION PROCEEDINGS WILL BE
+                        CONDUCTED ONLY ON AN INDIVIDUAL BASIS AND NOT IN A CLASS, CONSOLIDATED, OR REPRESENTATIVE
+                        ACTION.</p>
+                </div>
+
+                <h3>11.5 Time Limitation</h3>
+                <p>Any claim or cause of action arising from or related to the Service must be filed within one (1) year
+                    after the claim arose, or be permanently barred.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 12 -->
+                <h2 id="termination">12. Termination</h2>
+
+                <h3>12.1 Termination by You</h3>
+                <p>You may stop using the Service at any time. No formal termination process is required.</p>
+
+                <h3>12.2 Termination by Us</h3>
+                <p>We may, in our sole discretion, terminate or suspend your access to the Service:</p>
+                <ul>
+                    <li>Immediately, without notice, for violation of these Terms</li>
+                    <li>With notice, for any reason or no reason</li>
+                    <li>If we discontinue the Service</li>
+                </ul>
+
+                <h3>12.3 Effects of Termination</h3>
+                <p>Upon termination:</p>
+                <ul>
+                    <li>Your right to use the Service ceases immediately</li>
+                    <li>Provisions that should survive termination will remain in effect (including Sections 5, 8, 9,
+                        10, and 11)</li>
+                    <li>We are not liable for any termination of your access</li>
+                </ul>
+
+                <h3>12.4 Survival</h3>
+                <p>The following provisions survive termination: Intellectual Property, Disclaimers, Limitation of
+                    Liability, Indemnification, Dispute Resolution, and any other provisions that by their nature should
+                    survive.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 13 -->
+                <h2 id="general">13. General Provisions</h2>
+
+                <h3>13.1 Entire Agreement</h3>
+                <p>These Terms, together with our Privacy Policy, constitute the entire agreement between you and
+                    YTScript regarding the Service and supersede all prior agreements and understandings.</p>
+
+                <h3>13.2 Severability</h3>
+                <p>If any provision of these Terms is found to be unenforceable or invalid, that provision shall be
+                    limited or eliminated to the minimum extent necessary, and the remaining provisions shall remain in
+                    full force and effect.</p>
+
+                <h3>13.3 Waiver</h3>
+                <p>Our failure to enforce any right or provision of these Terms shall not be deemed a waiver of such
+                    right or provision. Any waiver must be in writing and signed by us.</p>
+
+                <h3>13.4 Assignment</h3>
+                <p>You may not assign or transfer these Terms or your rights under them without our prior written
+                    consent. We may assign our rights and obligations without restriction.</p>
+
+                <h3>13.5 No Third-Party Beneficiaries</h3>
+                <p>These Terms do not create any third-party beneficiary rights, except as expressly provided.</p>
+
+                <h3>13.6 Force Majeure</h3>
+                <p>We shall not be liable for any failure or delay in performance resulting from causes beyond our
+                    reasonable control, including natural disasters, war, terrorism, riots, government actions, or
+                    internet disruptions.</p>
+
+                <h3>13.7 Headings</h3>
+                <p>Section headings are for convenience only and do not affect the interpretation of these Terms.</p>
+
+                <h3>13.8 Language</h3>
+                <p>These Terms are written in English. Any translations are provided for convenience only. In case of
+                    conflict, the English version prevails.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 14 -->
+                <h2 id="contact">14. Contact Information</h2>
+
+                <p>If you have any questions about these Terms of Service, please contact us:</p>
+
+                <p><strong>General Inquiries:</strong><br>
+                    Email: <a href="mailto:contact@ytscript.com">contact@ytscript.com</a></p>
+
+                <p><strong>Legal Matters:</strong><br>
+                    Email: <a href="mailto:legal@ytscript.com">legal@ytscript.com</a></p>
+
+                <p><strong>Copyright Issues:</strong><br>
+                    Email: <a href="mailto:copyright@ytscript.com">copyright@ytscript.com</a></p>
+
+                <p><strong>Mailing Address:</strong><br>
+                    YTScript<br>
+                    Istanbul, Turkey</p>
+
+                <p>We will respond to inquiries within a reasonable timeframe.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Section 15 -->
+                <h2 id="acknowledgment">15. Acknowledgment</h2>
+
+                <div class="acknowledgment-box">
+                    <p><strong>BY USING YTSCRIPT, YOU ACKNOWLEDGE THAT:</strong></p>
+                    <p>✓ You have read and understood these Terms of Service</p>
+                    <p>✓ You agree to be bound by these Terms</p>
+                    <p>✓ You are of legal age to enter into this agreement</p>
+                    <p>✓ If using on behalf of an organization, you have authority to bind that organization</p>
+                    <p>✓ You have also read and agree to our <a href="privacy.html">Privacy Policy</a></p>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <p><strong>Effective Date:</strong> December 27, 2024</p>
+                <p><strong>Version:</strong> 1.0</p>
+
+                <hr>
+
+                <p><em>These Terms of Service are provided for informational purposes and should be reviewed by a legal
+                        professional before implementation. They are designed to be comprehensive and to support Google
+                        AdSense compliance requirements.</em></p>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📝</span>
+                    <span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>

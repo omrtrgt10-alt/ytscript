@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube SEO: How Subtitles and Transcripts Boost Your Video Rankings | YTScript Blog</title>
+    <meta name="description"
+        content="Learn how captions and transcripts impact YouTube SEO. Discover keyword opportunities, watch time improvements, and optimization strategies.">
+    <meta name="keywords"
+        content="youtube seo, video seo, youtube captions seo, video transcripts ranking, youtube search optimization">
+
+    <meta property="og:title" content="YouTube SEO: How Subtitles and Transcripts Boost Your Video Rankings">
+    <meta property="og:description"
+        content="Subtitles are an underutilized SEO tool. Learn how to leverage them for better rankings.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ytscript.com/blog/youtube-seo-subtitles">
+
+    <meta property="article:published_time" content="2024-12-27">
+    <meta property="article:author" content="YTScript Team">
+    <meta property="article:section" content="SEO & Marketing">
+
+    <link rel="canonical" href="https://ytscript.com/blog/youtube-seo-subtitles">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .blog-page {
+            padding: 4rem 0;
+        }
+
+        .blog-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-category {
+            display: inline-block;
+            background: #f59e0b;
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-body h2 {
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .article-body h3 {
+            font-size: 1.35rem;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .article-body h4 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .article-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .article-body ul,
+        .article-body ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body li {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        .article-body a:hover {
+            text-decoration: underline;
+        }
+
+        .article-body strong {
+            color: var(--text-primary);
+        }
+
+        .article-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .article-body th,
+        .article-body td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-body th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-body td {
+            color: var(--text-secondary);
+        }
+
+        .ranking-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .factor-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+        }
+
+        .factor-card h4 {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+
+        .factor-icon {
+            font-size: 2rem;
+        }
+
+        .factor-card ul {
+            text-align: left;
+            font-size: 0.85rem;
+            margin: 0;
+            padding-left: 1rem;
+        }
+
+        .seo-stat {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .seo-stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .seo-stat-label {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .comparison-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-rating {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .rating-item {
+            background: var(--bg-tertiary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+        }
+
+        .action-day {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .action-day h4 {
+            margin: 0 0 0.5rem;
+            color: var(--accent);
+            font-size: 0.95rem;
+        }
+
+        .action-day p {
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout.tip {
+            border-left-color: #22c55e;
+        }
+
+        .callout.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .callout p:last-child,
+        .callout ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+        }
+
+        .cta-box p {
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+            text-decoration: none;
+        }
+
+        .related-articles {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .related-articles h3 {
+            margin-top: 0;
+        }
+
+        .related-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .related-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .related-list li:last-child {
+            border-bottom: none;
+        }
+
+        .related-list a {
+            color: var(--text-secondary);
+        }
+
+        .related-list a:hover {
+            color: var(--accent);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .toc h4 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .article-title {
+                font-size: 1.75rem;
+            }
+
+            .ranking-factors {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "YouTube SEO: How Subtitles and Transcripts Boost Your Video Rankings",
+        "description": "Learn how captions and transcripts impact YouTube SEO and how to optimize for better rankings.",
+        "author": { "@type": "Organization", "name": "YTScript" },
+        "publisher": { "@type": "Organization", "name": "YTScript" },
+        "datePublished": "2024-12-27",
+        "dateModified": "2024-12-27"
+    }
+    </script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo"><span class="logo-icon">📝</span><span class="logo-text">YTScript</span></a>
+            <nav class="nav">
+                <a href="/blog/" class="nav-link">Blog</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="blog-page">
+        <div class="container">
+            <div class="blog-content">
+
+                <a href="/blog/" class="back-link">← Back to Blog</a>
+
+                <header class="article-header">
+                    <span class="article-category">SEO & Marketing</span>
+                    <h1 class="article-title">YouTube SEO: How Subtitles and Transcripts Boost Your Video Rankings</h1>
+                    <div class="article-meta">
+                        <span>📅 December 27, 2024</span>
+                        <span>⏱️ 8 min read</span>
+                        <span>✍️ YTScript Team</span>
+                    </div>
+                </header>
+
+                <article class="article-body">
+
+                    <p>You've created an amazing video. But if no one can find it, does it even matter?</p>
+
+                    <p>YouTube is the world's <strong>second-largest search engine</strong>, processing over 3 billion
+                        searches per month. Understanding how to optimize your videos for search — including the
+                        often-overlooked power of subtitles and transcripts — can mean the difference between 100 views
+                        and 100,000.</p>
+
+                    <nav class="toc">
+                        <h4>📋 Table of Contents</h4>
+                        <ol>
+                            <li><a href="#how-youtube-works">How YouTube Search Works</a></li>
+                            <li><a href="#seo-power">The SEO Power of Closed Captions</a></li>
+                            <li><a href="#auto-vs-manual">Auto-Captions vs. Manual Captions</a></li>
+                            <li><a href="#watch-time">How Captions Improve Watch Time</a></li>
+                            <li><a href="#optimizing">Optimizing Captions for SEO</a></li>
+                            <li><a href="#descriptions">Transcripts in Video Descriptions</a></li>
+                            <li><a href="#action-plan">7-Day Action Plan</a></li>
+                        </ol>
+                    </nav>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="how-youtube-works">How YouTube Search Works</h2>
+
+                    <p>Before we dive into subtitles, let's understand YouTube's ranking factors.</p>
+
+                    <h3>Primary Ranking Signals</h3>
+
+                    <div class="ranking-factors">
+                        <div class="factor-card">
+                            <div class="factor-icon">🎯</div>
+                            <h4>Relevance</h4>
+                            <ul>
+                                <li>Title & description</li>
+                                <li>Transcript content</li>
+                                <li>Topic relevance</li>
+                            </ul>
+                        </div>
+                        <div class="factor-card">
+                            <div class="factor-icon">📈</div>
+                            <h4>Engagement</h4>
+                            <ul>
+                                <li>Watch time</li>
+                                <li>Click-through rate</li>
+                                <li>Likes & comments</li>
+                            </ul>
+                        </div>
+                        <div class="factor-card">
+                            <div class="factor-icon">⭐</div>
+                            <h4>Quality</h4>
+                            <ul>
+                                <li>Production value</li>
+                                <li>Retention curves</li>
+                                <li>User satisfaction</li>
+                            </ul>
+                        </div>
+                        <div class="factor-card">
+                            <div class="factor-icon">🏆</div>
+                            <h4>Authority</h4>
+                            <ul>
+                                <li>Subscriber count</li>
+                                <li>Channel watch time</li>
+                                <li>Topic expertise</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Where Subtitles Fit In</h3>
+                    <p>Subtitles and transcripts directly impact:</p>
+                    <ul>
+                        <li>✅ <strong>Relevance</strong> — More text content for YouTube to analyze</li>
+                        <li>✅ <strong>Engagement</strong> — Viewers watch longer with captions</li>
+                        <li>✅ <strong>Quality</strong> — Accessibility is a quality signal</li>
+                        <li>✅ <strong>Authority</strong> — Professional channels use captions</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="seo-power">The SEO Power of Closed Captions</h2>
+
+                    <h3>YouTube Indexes Caption Content</h3>
+
+                    <p>Here's what most creators don't realize: <strong>YouTube reads your captions.</strong></p>
+
+                    <p>When you upload subtitles or enable auto-captions, YouTube:</p>
+                    <ol>
+                        <li>Extracts the text content</li>
+                        <li>Analyzes it for topic relevance</li>
+                        <li>Identifies keywords and phrases</li>
+                        <li>Uses this data for search ranking</li>
+                    </ol>
+
+                    <div class="seo-stat">
+                        <div class="seo-stat-number">1,500+</div>
+                        <div class="seo-stat-label">Words in a typical 10-minute video transcript<br>= 1,500 keyword
+                            opportunities</div>
+                    </div>
+
+                    <div class="callout tip">
+                        <h4>💡 Long-Tail Keyword Opportunities</h4>
+                        <p>Transcripts capture how people actually talk about topics, which often matches how they
+                            search.</p>
+                        <p><strong>Short-tail:</strong> "pasta recipe"<br>
+                            <strong>Long-tail (from transcript):</strong> "how long to cook spaghetti until al dente"
+                        </p>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="auto-vs-manual">Auto-Captions vs. Manual Captions</h2>
+
+                    <div class="comparison-card">
+                        <h4>🤖 Auto-Generated Captions</h4>
+                        <div class="comparison-rating">
+                            <span class="rating-item">Keyword capture: ⭐⭐⭐</span>
+                            <span class="rating-item">User experience: ⭐⭐</span>
+                            <span class="rating-item">Free: ✅</span>
+                        </div>
+                        <p><strong>Pros:</strong> Free, automatic, continuously improving</p>
+                        <p><strong>Cons:</strong> Accuracy varies, poor punctuation, may misinterpret words</p>
+                    </div>
+
+                    <div class="comparison-card">
+                        <h4>✍️ Manual/Uploaded Captions</h4>
+                        <div class="comparison-rating">
+                            <span class="rating-item">Keyword capture: ⭐⭐⭐⭐⭐</span>
+                            <span class="rating-item">User experience: ⭐⭐⭐⭐⭐</span>
+                            <span class="rating-item">SEO boost: ⭐⭐⭐⭐</span>
+                        </div>
+                        <p><strong>Pros:</strong> Perfect accuracy, proper formatting, professional appearance</p>
+                        <p><strong>Cons:</strong> Time investment required</p>
+                    </div>
+
+                    <p><strong>Verdict:</strong> For SEO, manual captions win every time. Minimum viable: Enable
+                        auto-captions, then edit for accuracy.</p>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="watch-time">How Captions Improve Watch Time</h2>
+
+                    <p><strong>Watch time is YouTube's #1 ranking factor.</strong> Captions directly improve it.</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Statistic</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>More likely to watch with captions</td>
+                                <td><strong>80%</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Higher average watch time</td>
+                                <td><strong>+12%</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Viewers watch with sound off</td>
+                                <td><strong>40%</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Why Captions Increase Watch Time</h3>
+                    <ul>
+                        <li><strong>Accessibility:</strong> Deaf and hard-of-hearing viewers engage fully</li>
+                        <li><strong>Non-native speakers:</strong> Follow along better</li>
+                        <li><strong>Sound-off viewing:</strong> Offices, transit, quiet environments</li>
+                        <li><strong>Comprehension:</strong> Reading + listening improves retention</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="optimizing">Optimizing Captions for SEO</h2>
+
+                    <h3>Strategic Keyword Placement</h3>
+                    <p>While you shouldn't stuff keywords unnaturally, you can be intentional:</p>
+                    <ul>
+                        <li>Say your target keyword within the first 30 seconds</li>
+                        <li>Naturally repeat key terms throughout</li>
+                        <li>Use variations and synonyms</li>
+                        <li>Include long-tail phrases conversationally</li>
+                    </ul>
+
+                    <div class="callout warning">
+                        <h4>⚠️ What NOT to Do</h4>
+                        <ul>
+                            <li><strong>Keyword stuffing</strong> — Adding keywords that weren't spoken</li>
+                            <li><strong>Invisible text</strong> — Hiding keywords in descriptions</li>
+                            <li><strong>Misleading captions</strong> — Captions that don't match audio</li>
+                        </ul>
+                        <p>These can result in penalties or removal.</p>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="descriptions">Transcripts in Video Descriptions</h2>
+
+                    <p>YouTube video descriptions can be up to <strong>5,000 characters</strong>. Most creators use
+                        maybe 200.</p>
+
+                    <p>Adding a transcript to your description provides:</p>
+                    <ul>
+                        <li>More keyword-rich text for indexing</li>
+                        <li>Better context for the algorithm</li>
+                        <li>Value for viewers who prefer reading</li>
+                        <li>Accessibility benefits</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <h2 id="action-plan">Action Plan: Caption SEO in 7 Days</h2>
+
+                    <div class="action-day">
+                        <h4>Day 1: Audit Current State</h4>
+                        <p>Check which videos have captions enabled, review auto-caption accuracy</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 2: Optimize Top Performer</h4>
+                        <p>Download and edit captions for your best video, fix errors, re-upload</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 3: Enhance Description</h4>
+                        <p>Add transcript or summary to description, include timestamps</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 4: Research Keywords</h4>
+                        <p>Use YouTube search suggestions, check competitor video transcripts</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 5: Create Caption Workflow</h4>
+                        <p>Decide: DIY, edit auto, or professional service</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 6: Consider Translations</h4>
+                        <p>Identify top non-English audiences, add one translation to test</p>
+                    </div>
+                    <div class="action-day">
+                        <h4>Day 7: Set Up Tracking</h4>
+                        <p>Baseline your current metrics, set up monthly review schedule</p>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h2>Conclusion</h2>
+
+                    <p>Subtitles and transcripts are one of the <strong>most underutilized SEO tools</strong> on
+                        YouTube.</p>
+
+                    <h3>Key Takeaways:</h3>
+                    <ol>
+                        <li><strong>YouTube indexes caption content</strong> — Your words become searchable</li>
+                        <li><strong>Captions improve watch time</strong> — The #1 ranking factor</li>
+                        <li><strong>Manual beats auto</strong> — Accuracy matters for SEO and UX</li>
+                        <li><strong>Descriptions are real estate</strong> — Use them for transcripts</li>
+                        <li><strong>Translations unlock growth</strong> — Reach global audiences</li>
+                    </ol>
+
+                    <div class="cta-box">
+                        <h3>Start Optimizing Today</h3>
+                        <p>Use YTScript to research competitor videos, extract transcripts, and identify content
+                            opportunities.</p>
+                        <a href="/" class="cta-button">Try YTScript Free →</a>
+                    </div>
+
+                    <div class="related-articles">
+                        <h3>📚 Related Articles</h3>
+                        <ul class="related-list">
+                            <li><a href="how-to-download-youtube-subtitles.html">→ How to Download YouTube Subtitles:
+                                    Complete Guide</a></li>
+                            <li><a href="why-video-transcripts-matter.html">→ Why Video Transcripts Matter for
+                                    Accessibility</a></li>
+                            <li><a href="10-ways-repurpose-transcripts.html">→ 10 Ways to Repurpose Video Content</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand"><span class="logo-icon">📝</span><span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="/blog/">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>

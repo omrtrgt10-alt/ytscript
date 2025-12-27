@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Download YouTube Subtitles: Complete Guide 2025 | YTScript Blog</title>
+    <meta name="description"
+        content="Learn how to download YouTube subtitles and transcripts. Complete guide covering YTScript, browser extensions, and native YouTube features. All formats explained.">
+    <meta name="keywords"
+        content="download youtube subtitles, youtube transcript, extract captions, SRT download, VTT subtitles, youtube captions">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="How to Download YouTube Subtitles: Complete Guide 2025">
+    <meta property="og:description"
+        content="The ultimate guide to downloading YouTube subtitles. Learn 4 different methods, file formats, and best practices.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://ytscript.com/blog/how-to-download-youtube-subtitles">
+
+    <!-- Article Meta -->
+    <meta property="article:published_time" content="2024-12-27">
+    <meta property="article:author" content="YTScript Team">
+    <meta property="article:section" content="Guides & Tutorials">
+
+    <link rel="canonical" href="https://ytscript.com/blog/how-to-download-youtube-subtitles">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .blog-page {
+            padding: 4rem 0;
+        }
+
+        .blog-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Article Header */
+        .article-header {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-category {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Article Body */
+        .article-body h2 {
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent);
+            display: inline-block;
+        }
+
+        .article-body h3 {
+            font-size: 1.35rem;
+            margin: 2.5rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .article-body h4 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .article-body p {
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .article-body ul,
+        .article-body ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .article-body li {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+        }
+
+        .article-body a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .article-body a:hover {
+            text-decoration: underline;
+        }
+
+        .article-body strong {
+            color: var(--text-primary);
+        }
+
+        .article-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .article-body th,
+        .article-body td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .article-body th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .article-body td {
+            color: var(--text-secondary);
+        }
+
+        .article-body tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Code Blocks */
+        .article-body pre {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .article-body code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .article-body pre code {
+            color: var(--text-secondary);
+        }
+
+        /* Callout Boxes */
+        .callout {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .callout.tip {
+            border-left-color: #22c55e;
+        }
+
+        .callout.warning {
+            border-left-color: #f59e0b;
+        }
+
+        .callout h4 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+        }
+
+        .callout p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Step Cards */
+        .step-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step-number {
+            position: absolute;
+            left: 1.25rem;
+            top: 1.25rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .step-card h4 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        .step-card p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .info-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .info-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-card ul {
+            margin-bottom: 0;
+        }
+
+        /* Pros/Cons */
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pros,
+        .cons {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+
+        .pros {
+            border-left: 4px solid #22c55e;
+        }
+
+        .cons {
+            border-left: 4px solid #ef4444;
+        }
+
+        .pros h5,
+        .cons h5 {
+            margin: 0 0 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .pros ul,
+        .cons ul {
+            margin-bottom: 0;
+            padding-left: 1.25rem;
+        }
+
+        .pros li,
+        .cons li {
+            font-size: 0.9rem;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        /* CTA Box */
+        .cta-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 2px solid var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .cta-box h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        .cta-box p {
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+            text-decoration: none;
+        }
+
+        /* Related Articles */
+        .related-articles {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .related-articles h3 {
+            margin-top: 0;
+        }
+
+        .related-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .related-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .related-list li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .related-list a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            transition: color 0.2s;
+        }
+
+        .related-list a:hover {
+            color: var(--accent);
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* TOC */
+        .toc {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border);
+        }
+
+        .toc h4 {
+            margin: 0 0 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 1.25rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .toc a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 640px) {
+            .article-title {
+                font-size: 1.75rem;
+            }
+
+            .article-body h2 {
+                font-size: 1.4rem;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- Schema.org Article Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Download YouTube Subtitles: The Complete Guide for 2025",
+        "description": "Learn how to download YouTube subtitles and transcripts using YTScript, browser extensions, and native YouTube features. Complete guide with all formats explained.",
+        "image": "https://ytscript.com/images/blog/youtube-subtitles-guide.jpg",
+        "author": {
+            "@type": "Organization",
+            "name": "YTScript"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "YTScript",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://ytscript.com/logo.png"
+            }
+        },
+        "datePublished": "2024-12-27",
+        "dateModified": "2024-12-27",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://ytscript.com/blog/how-to-download-youtube-subtitles"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">YTScript</span>
+            </a>
+            <nav class="nav">
+                <a href="/blog/" class="nav-link">Blog</a>
+                <a href="/about.html" class="nav-link">About</a>
+                <a href="/contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="blog-page">
+        <div class="container">
+            <div class="blog-content">
+
+                <a href="/blog/" class="back-link">← Back to Blog</a>
+
+                <!-- Article Header -->
+                <header class="article-header">
+                    <span class="article-category">Guides & Tutorials</span>
+                    <h1 class="article-title">How to Download YouTube Subtitles: The Complete Guide for 2025</h1>
+                    <div class="article-meta">
+                        <span>📅 December 27, 2024</span>
+                        <span>⏱️ 8 min read</span>
+                        <span>✍️ YTScript Team</span>
+                    </div>
+                </header>
+
+                <!-- Article Body -->
+                <article class="article-body">
+
+                    <p>YouTube hosts over <strong>800 million videos</strong>, and millions of them have subtitles.
+                        Whether you're a student, content creator, researcher, or just someone who prefers reading to
+                        watching — knowing how to download YouTube subtitles can save you hours of work.</p>
+
+                    <p>In this comprehensive guide, we'll cover everything you need to know about extracting,
+                        downloading, and using YouTube transcripts.</p>
+
+                    <!-- Table of Contents -->
+                    <nav class="toc">
+                        <h4>📋 Table of Contents</h4>
+                        <ol>
+                            <li><a href="#why-download">Why Download YouTube Subtitles?</a></li>
+                            <li><a href="#subtitle-types">Understanding YouTube Subtitle Types</a></li>
+                            <li><a href="#method-ytscript">Method 1: Using YTScript (Easiest)</a></li>
+                            <li><a href="#method-native">Method 2: YouTube's Built-in Feature</a></li>
+                            <li><a href="#method-extensions">Method 3: Browser Extensions</a></li>
+                            <li><a href="#method-downloaders">Method 4: Video Downloaders</a></li>
+                            <li><a href="#formats">Subtitle File Formats Explained</a></li>
+                            <li><a href="#tips">Tips for Working with Transcripts</a></li>
+                            <li><a href="#legal">Legal Considerations</a></li>
+                            <li><a href="#problems">Common Problems and Solutions</a></li>
+                        </ol>
+                    </nav>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Why Download -->
+                    <h2 id="why-download">Why Download YouTube Subtitles?</h2>
+
+                    <p>Before we dive into the how, let's talk about the why. There are countless reasons why you might
+                        want to download subtitles:</p>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <h4>📚 For Learning & Education</h4>
+                            <ul>
+                                <li>Study more efficiently than watching</li>
+                                <li>Take better notes with copy-paste</li>
+                                <li>Learn languages by reading along</li>
+                                <li>Review lectures quickly</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h4>✍️ For Content Creation</h4>
+                            <ul>
+                                <li>Research faster without rewatching</li>
+                                <li>Repurpose content into blog posts</li>
+                                <li>SEO optimization research</li>
+                                <li>Create subtitles for your videos</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h4>♿ For Accessibility</h4>
+                            <ul>
+                                <li>Access content in text format</li>
+                                <li>Read in noisy environments</li>
+                                <li>Support different learning styles</li>
+                                <li>Hearing impaired accessibility</li>
+                            </ul>
+                        </div>
+                        <div class="info-card">
+                            <h4>💼 For Professional Use</h4>
+                            <ul>
+                                <li>Journalists fact-checking quotes</li>
+                                <li>Researchers analyzing content</li>
+                                <li>Legal documentation</li>
+                                <li>Competitor analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Subtitle Types -->
+                    <h2 id="subtitle-types">Understanding YouTube Subtitle Types</h2>
+
+                    <p>Not all YouTube subtitles are created equal. Understanding the different types helps you know
+                        what to expect:</p>
+
+                    <h3>Auto-Generated Captions</h3>
+                    <p>YouTube automatically generates captions for most videos using speech recognition technology.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Pros</h5>
+                            <ul>
+                                <li>Available on most videos</li>
+                                <li>Multiple languages supported</li>
+                                <li>Better than nothing</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>❌ Cons</h5>
+                            <ul>
+                                <li>Can be inaccurate</li>
+                                <li>Struggles with accents</li>
+                                <li>Poor punctuation</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Manually Created Subtitles</h3>
+                    <p>These are captions added by the video creator or their team.</p>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Pros</h5>
+                            <ul>
+                                <li>High accuracy</li>
+                                <li>Proper punctuation</li>
+                                <li>Speaker labels included</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>❌ Cons</h5>
+                            <ul>
+                                <li>Not available on all videos</li>
+                                <li>Time-consuming to create</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Method 1: YTScript -->
+                    <h2 id="method-ytscript">Method 1: Using YTScript (Easiest)</h2>
+
+                    <p>The fastest way to download YouTube subtitles is using a dedicated tool like
+                        <strong>YTScript</strong>.</p>
+
+                    <h3>Step-by-Step Instructions</h3>
+
+                    <div class="step-card">
+                        <span class="step-number">1</span>
+                        <h4>Copy the YouTube URL</h4>
+                        <p>Go to the YouTube video and copy the URL from your browser's address bar. Works with both
+                            youtube.com and youtu.be links.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <span class="step-number">2</span>
+                        <h4>Open YTScript</h4>
+                        <p>Go to ytscript.com. No registration or login required — just start using it immediately.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <span class="step-number">3</span>
+                        <h4>Paste and Extract</h4>
+                        <p>Paste the URL in the input field and click the "Extract" button. Wait a few seconds for the
+                            results.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <span class="step-number">4</span>
+                        <h4>Choose Your Format</h4>
+                        <p><strong>TXT</strong> for reading, <strong>SRT</strong> for video editing,
+                            <strong>VTT</strong> for web, or <strong>JSON</strong> for developers.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <span class="step-number">5</span>
+                        <h4>Download</h4>
+                        <p>Click the download button for your preferred format. The file saves to your downloads folder
+                            instantly.</p>
+                    </div>
+
+                    <div class="callout tip">
+                        <h4>💡 Pro Tips</h4>
+                        <ul>
+                            <li>If subtitles aren't available, the video may not have captions enabled</li>
+                            <li>Try different language options if available</li>
+                            <li>Use the timestamp toggle to include or exclude timing information</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Method 2: Native -->
+                    <h2 id="method-native">Method 2: YouTube's Built-in Feature</h2>
+
+                    <p>YouTube allows you to view and copy transcripts directly on the platform.</p>
+
+                    <h3>On Desktop</h3>
+                    <ol>
+                        <li>Open the video on YouTube</li>
+                        <li>Click the three dots (•••) below the video</li>
+                        <li>Select "Show transcript"</li>
+                        <li>A transcript panel appears on the right</li>
+                        <li>Click the three dots in the transcript panel</li>
+                        <li>Select "Toggle timestamps" if you want to remove them</li>
+                        <li>Select all text (Ctrl+A / Cmd+A) and copy</li>
+                    </ol>
+
+                    <div class="callout warning">
+                        <h4>⚠️ Limitations</h4>
+                        <ul>
+                            <li>Manual copy-paste process</li>
+                            <li>Formatting may be messy</li>
+                            <li>No direct download option</li>
+                            <li>Doesn't work on all videos</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Method 3: Extensions -->
+                    <h2 id="method-extensions">Method 3: Browser Extensions</h2>
+
+                    <p>Several browser extensions can help download subtitles directly from YouTube.</p>
+
+                    <h3>Popular Options</h3>
+                    <ul>
+                        <li><strong>YouTube Subtitle Downloader</strong> (Chrome)</li>
+                        <li><strong>Easy YouTube Subtitles</strong> (Firefox)</li>
+                        <li><strong>Substital</strong> (Chrome/Firefox)</li>
+                    </ul>
+
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Pros</h5>
+                            <ul>
+                                <li>Integrated into YouTube interface</li>
+                                <li>One-click download</li>
+                                <li>Usually free</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>❌ Cons</h5>
+                            <ul>
+                                <li>Need to install software</li>
+                                <li>Privacy concerns</li>
+                                <li>May break when YouTube updates</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Method 4: Downloaders -->
+                    <h2 id="method-downloaders">Method 4: Video Downloaders</h2>
+
+                    <p>Some video download tools also extract subtitles.</p>
+
+                    <h3>Examples</h3>
+                    <ul>
+                        <li>4K Video Downloader</li>
+                        <li>yt-dlp (command line)</li>
+                        <li>JDownloader</li>
+                    </ul>
+
+                    <h4>Best For:</h4>
+                    <ul>
+                        <li>When you need both video and subtitles</li>
+                        <li>Offline archiving</li>
+                        <li>Batch downloads</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Formats -->
+                    <h2 id="formats">Subtitle File Formats Explained</h2>
+
+                    <p>Different formats serve different purposes. Here's what you need to know:</p>
+
+                    <h3>TXT (Plain Text)</h3>
+                    <pre><code>Hello and welcome to this video.
+Today we're going to talk about...</code></pre>
+                    <p><strong>Best for:</strong> Reading, reference, copy-pasting into documents, note-taking.</p>
+
+                    <h3>SRT (SubRip Subtitle)</h3>
+                    <pre><code>1
+00:00:00,000 --> 00:00:02,500
+Hello and welcome to this video.
+
+2
+00:00:02,500 --> 00:00:05,000
+Today we're going to talk about...</code></pre>
+                    <p><strong>Best for:</strong> Video editing software, adding subtitles to videos, professional use.
+                    </p>
+
+                    <h3>VTT (Web Video Text Tracks)</h3>
+                    <pre><code>WEBVTT
+
+00:00:00.000 --> 00:00:02.500
+Hello and welcome to this video.
+
+00:00:02.500 --> 00:00:05.000
+Today we're going to talk about...</code></pre>
+                    <p><strong>Best for:</strong> HTML5 video players, web development, streaming platforms.</p>
+
+                    <h3>JSON (JavaScript Object Notation)</h3>
+                    <pre><code>{
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 2.5,
+      "text": "Hello and welcome to this video."
+    }
+  ]
+}</code></pre>
+                    <p><strong>Best for:</strong> Developers, data analysis, API integration, custom applications.</p>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Tips -->
+                    <h2 id="tips">Tips for Working with Transcripts</h2>
+
+                    <h3>Cleaning Up Auto-Generated Captions</h3>
+                    <p>Auto-generated captions often need editing. Common issues to fix:</p>
+                    <ol>
+                        <li><strong>Capitalization:</strong> Proper nouns and sentence starts</li>
+                        <li><strong>Punctuation:</strong> Add periods, commas, question marks</li>
+                        <li><strong>Homophones:</strong> "their/there/they're", "your/you're"</li>
+                        <li><strong>Technical terms:</strong> Industry jargon often gets mangled</li>
+                        <li><strong>Names:</strong> People and brand names are frequently wrong</li>
+                    </ol>
+
+                    <h3>Making Transcripts More Readable</h3>
+                    <ul>
+                        <li>Break into paragraphs by topic</li>
+                        <li>Add headers for long transcripts</li>
+                        <li>Remove filler words ("um", "uh", "like")</li>
+                        <li>Fix run-on sentences</li>
+                    </ul>
+
+                    <h3>Using Transcripts for SEO</h3>
+                    <ul>
+                        <li>Identify keywords people use naturally</li>
+                        <li>Find question-and-answer patterns</li>
+                        <li>Extract quotes for social media</li>
+                        <li>Create summaries for blog posts</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Legal -->
+                    <h2 id="legal">Legal Considerations</h2>
+
+                    <h3>What's Allowed</h3>
+                    <ul>
+                        <li>Downloading subtitles for personal use</li>
+                        <li>Educational purposes</li>
+                        <li>Accessibility needs</li>
+                        <li>Fair use (criticism, commentary, research)</li>
+                    </ul>
+
+                    <h3>What to Be Careful About</h3>
+                    <ul>
+                        <li>Commercial use without permission</li>
+                        <li>Redistributing content as your own</li>
+                        <li>Violating copyright</li>
+                        <li>Breaking YouTube's Terms of Service</li>
+                    </ul>
+
+                    <div class="callout">
+                        <h4>💡 Best Practices</h4>
+                        <ul>
+                            <li>Always credit original creators</li>
+                            <li>Don't claim others' content as your own</li>
+                            <li>When in doubt, ask permission</li>
+                            <li>Understand fair use in your jurisdiction</li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Problems -->
+                    <h2 id="problems">Common Problems and Solutions</h2>
+
+                    <h3>"No subtitles available"</h3>
+                    <p><strong>Cause:</strong> The video doesn't have captions enabled.</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Check if the video has a CC icon on YouTube</li>
+                        <li>Try auto-generated captions (might be hidden)</li>
+                        <li>Contact the creator to request captions</li>
+                    </ul>
+
+                    <h3>"Transcript is very inaccurate"</h3>
+                    <p><strong>Cause:</strong> Auto-generated captions struggle with audio quality.</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Look for manually-created subtitles</li>
+                        <li>Use as a starting point and edit manually</li>
+                        <li>Try a different video on the same topic</li>
+                    </ul>
+
+                    <h3>"Wrong language"</h3>
+                    <p><strong>Cause:</strong> Multiple subtitle tracks available.</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Check for language selection options</li>
+                        <li>Default is usually the video's primary language</li>
+                        <li>Look for translated versions</li>
+                    </ul>
+
+                    <div class="section-divider"></div>
+
+                    <!-- Conclusion -->
+                    <h2>Conclusion</h2>
+
+                    <p>Downloading YouTube subtitles is easier than ever with the right tools. Whether you're studying,
+                        creating content, or just prefer reading — now you have all the methods and knowledge you need.
+                    </p>
+
+                    <h3>Quick Recap</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Speed</th>
+                                <th>Ease</th>
+                                <th>Best For</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>YTScript</td>
+                                <td>⚡ Fast</td>
+                                <td>Easy</td>
+                                <td>Most users</td>
+                            </tr>
+                            <tr>
+                                <td>YouTube Native</td>
+                                <td>Medium</td>
+                                <td>Easy</td>
+                                <td>Quick copy-paste</td>
+                            </tr>
+                            <tr>
+                                <td>Extensions</td>
+                                <td>Fast</td>
+                                <td>Medium</td>
+                                <td>Regular users</td>
+                            </tr>
+                            <tr>
+                                <td>Downloaders</td>
+                                <td>Slow</td>
+                                <td>Hard</td>
+                                <td>Video + subtitles</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- CTA -->
+                    <div class="cta-box">
+                        <h3>Ready to try it?</h3>
+                        <p>Extract your first transcript in seconds — no signup required.</p>
+                        <a href="/" class="cta-button">Try YTScript Free →</a>
+                    </div>
+
+                    <!-- Related Articles -->
+                    <div class="related-articles">
+                        <h3>📚 Related Articles</h3>
+                        <ul class="related-list">
+                            <li><a href="#">→ 5 Ways to Use YouTube Transcripts for Content Creation</a></li>
+                            <li><a href="#">→ Why Video Transcripts Matter for Accessibility</a></li>
+                            <li><a href="#">→ The Ultimate Guide to YouTube SEO</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <p style="text-align: center; color: var(--text-muted);">
+                        <em>Have questions? Check our <a href="/about.html#faq">FAQ</a> or <a
+                                href="/contact.html">contact us</a>.</em>
+                    </p>
+
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📝</span>
+                    <span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="/blog/">Blog</a>
+                    <a href="/about.html">About</a>
+                    <a href="/contact.html">Contact</a>
+                    <a href="/privacy.html">Privacy Policy</a>
+                    <a href="/terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>

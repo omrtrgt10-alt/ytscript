@@ -1,0 +1,40 @@
+# robots.txt for YTScript
+# Optimized for maximum crawling
+# https://ytscript.com
+
+User-agent: *
+Allow: /
+
+# Prioritize important pages
+Allow: /blog/
+Allow: /about.html
+Allow: /privacy.html
+Allow: /terms.html
+Allow: /contact.html
+
+# Block unnecessary paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /_next/static/
+
+# Sitemap
+Sitemap: https://ytscript.com/sitemap.xml
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1
+
+# Google specific - no delay for Googlebot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing specific
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Yahoo Slurp
+User-agent: Slurp
+Allow: /
+Crawl-delay: 2

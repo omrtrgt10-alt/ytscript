@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About YTScript - Free YouTube Subtitle Extractor Tool</title>
+    <meta name="description"
+        content="Learn about YTScript, the free online tool for extracting YouTube subtitles. Fast, free, no signup. Download transcripts in TXT, SRT, VTT, PDF formats.">
+    <meta name="keywords"
+        content="about ytscript, youtube subtitle tool, transcript extractor, free caption downloader">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://ytscript.com/about.html">
+    <meta property="og:title" content="About YTScript - Free YouTube Subtitle Extractor">
+    <meta property="og:description"
+        content="Learn about YTScript - the free, fast tool for extracting YouTube subtitles.">
+    <meta property="og:url" content="https://ytscript.com/about.html">
+    <meta property="og:type" content="website">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .about-page {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content .mission-statement {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .about-content h2 {
+            font-size: 1.75rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .about-content h3 {
+            font-size: 1.25rem;
+            margin: 2rem 0 1rem;
+            color: var(--text-primary);
+        }
+
+        .about-content h4 {
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--accent);
+        }
+
+        .about-content p,
+        .about-content li {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .about-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .about-content a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .about-content a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .about-content strong {
+            color: var(--text-primary);
+        }
+
+        .about-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .about-content th,
+        .about-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .about-content th {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .about-content td {
+            color: var(--text-secondary);
+        }
+
+        .about-content tr:last-child td {
+            border-bottom: none;
+        }
+
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 3rem 0;
+        }
+
+        /* Feature Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        /* User Cards */
+        .user-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .user-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+        }
+
+        .user-card h4 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        .user-card ul {
+            margin-bottom: 0;
+            padding-left: 1.25rem;
+        }
+
+        .user-card li {
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .value-card h4 {
+            margin: 0.5rem 0;
+            color: var(--text-primary);
+        }
+
+        .value-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* FAQ */
+        .faq-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .faq-answer {
+            padding: 0 1.25rem 1.25rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Roadmap */
+        .roadmap-section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .roadmap-section h4 {
+            margin-top: 0;
+            color: var(--accent);
+        }
+
+        .roadmap-section ul {
+            margin-bottom: 0;
+        }
+
+        .roadmap-section li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Contact Cards */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .contact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .contact-card h4 {
+            margin-top: 0.5rem;
+        }
+
+        .contact-card a {
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+        }
+
+        /* Story Box */
+        .story-box {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .story-box::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .story-box p {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Support Section */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .support-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+
+        .support-card:hover {
+            border-color: var(--accent);
+        }
+
+        .support-card h4 {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        .support-card p {
+            font-size: 0.85rem;
+            margin-bottom: 0;
+        }
+
+        /* Tech Stack */
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1rem 0;
+        }
+
+        .tech-badge {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Common Issues */
+        .issue-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .issue-item h4 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .issue-item p,
+        .issue-item ul {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 640px) {
+            .about-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .about-content h2 {
+                font-size: 1.5rem;
+            }
+
+            .feature-grid,
+            .user-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">YTScript</span>
+            </a>
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+            </nav>
+            <button id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="about-page">
+        <div class="container">
+            <div class="about-content">
+
+                <!-- Hero Section -->
+                <h1>About YTScript</h1>
+
+                <div class="mission-statement">
+                    <strong>Our Mission:</strong> YTScript was born from a simple frustration — <strong>accessing
+                        YouTube video transcripts shouldn't be complicated.</strong>
+                    <br><br>
+                    Whether you're a student taking notes from educational videos, a content creator researching topics,
+                    a journalist fact-checking quotes, or someone who simply prefers reading over watching — you deserve
+                    a tool that just works.
+                    <br><br>
+                    <em>That's exactly what we built.</em>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- What We Do -->
+                <h2>🚀 What We Do</h2>
+                <p>YTScript is a free, fast, and intuitive online tool that extracts subtitles and transcripts from any
+                    YouTube video in seconds.</p>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>⚡ Instant Extraction</h4>
+                        <p>Paste a YouTube URL, click extract, and get your transcript immediately. No waiting, no
+                            complicated steps.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📄 Multiple Export Formats</h4>
+                        <p>Download your transcripts in TXT, SRT, VTT, or JSON — whatever format you need.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🕐 Timestamp Control</h4>
+                        <p>View transcripts with or without timestamps, depending on your needs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🌙 Dark Mode</h4>
+                        <p>Easy on the eyes, especially during those late-night research sessions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>📱 Works Everywhere</h4>
+                        <p>Fully responsive design that works seamlessly on desktop, tablet, and mobile.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔒 Privacy First</h4>
+                        <p>We don't store your videos or transcripts. Your extraction history is saved locally — you're
+                            always in control.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Who Uses YTScript -->
+                <h2>👥 Who Uses YTScript?</h2>
+
+                <div class="user-grid">
+                    <div class="user-card">
+                        <h4>📚 Students & Educators</h4>
+                        <ul>
+                            <li>Study from lecture videos more efficiently</li>
+                            <li>Create study notes and summaries</li>
+                            <li>Access educational content in text form</li>
+                            <li>Support different learning styles</li>
+                        </ul>
+                    </div>
+                    <div class="user-card">
+                        <h4>✍️ Content Creators</h4>
+                        <ul>
+                            <li>Research topics from existing videos</li>
+                            <li>Repurpose video content into blog posts</li>
+                            <li>Find quotes and references quickly</li>
+                            <li>Speed up content research workflow</li>
+                        </ul>
+                    </div>
+                    <div class="user-card">
+                        <h4>📰 Journalists & Researchers</h4>
+                        <ul>
+                            <li>Fact-check quotes and statements</li>
+                            <li>Access interview content in searchable format</li>
+                            <li>Document video evidence</li>
+                            <li>Research public figures' statements</li>
+                        </ul>
+                    </div>
+                    <div class="user-card">
+                        <h4>♿ Accessibility Advocates</h4>
+                        <ul>
+                            <li>Create accessible versions of video content</li>
+                            <li>Support hearing-impaired communities</li>
+                            <li>Generate captions for content review</li>
+                            <li>Improve content accessibility</li>
+                        </ul>
+                    </div>
+                    <div class="user-card">
+                        <h4>🌍 Language Learners</h4>
+                        <ul>
+                            <li>Read along while watching foreign videos</li>
+                            <li>Study pronunciation and vocabulary</li>
+                            <li>Access content in multiple languages</li>
+                            <li>Practice reading comprehension</li>
+                        </ul>
+                    </div>
+                    <div class="user-card">
+                        <h4>💼 Professionals</h4>
+                        <ul>
+                            <li>Document meeting recordings</li>
+                            <li>Extract training video content</li>
+                            <li>Create searchable video archives</li>
+                            <li>Improve productivity</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Our Values -->
+                <h2>💎 Our Values</h2>
+
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">✨</div>
+                        <h4>Simplicity</h4>
+                        <p>Tools should be intuitive. If you need a manual to use it, we've failed.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">⚡</div>
+                        <h4>Speed</h4>
+                        <p>Your time is valuable. Results in seconds, not minutes.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🔒</div>
+                        <h4>Privacy</h4>
+                        <p>We don't track what you extract. Your browsing stays yours.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">♿</div>
+                        <h4>Accessibility</h4>
+                        <p>Making video content accessible to everyone.</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🤝</div>
+                        <h4>Transparency</h4>
+                        <p>No hidden fees, no surprises. What you see is what you get.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- FAQ Section -->
+                <h2 id="faq">❓ Frequently Asked Questions</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is YTScript really free?</div>
+                    <div class="faq-answer">Yes, completely free. We're supported by advertising, which allows us to
+                        keep the service free for everyone.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do I need to create an account?</div>
+                    <div class="faq-answer">No. YTScript works without any registration or login. Just paste a URL and
+                        go.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">What videos work with YTScript?</div>
+                    <div class="faq-answer">YTScript can extract subtitles from any YouTube video that has captions
+                        available. This includes auto-generated captions, manually added subtitles, and
+                        community-contributed captions. If a video doesn't have captions, we cannot extract them (we
+                        don't create transcripts, we retrieve existing ones).</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Is it legal to use YTScript?</div>
+                    <div class="faq-answer">YTScript retrieves publicly available subtitle data from YouTube. However,
+                        you are responsible for how you use the extracted content. Please respect copyright laws and
+                        YouTube's Terms of Service.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Do you store my extracted transcripts?</div>
+                    <div class="faq-answer">No. We don't store any video URLs or transcripts on our servers. Your recent
+                        extraction history is stored locally in your browser, which you can clear at any time.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Why can't I extract subtitles from some videos?</div>
+                    <div class="faq-answer">Some videos may not have subtitles available, or the creator may have
+                        disabled captions. In these cases, extraction isn't possible.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I extract subtitles in different languages?</div>
+                    <div class="faq-answer">Yes! If a video has subtitles available in multiple languages, YTScript will
+                        show you all available options.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">How accurate are the transcripts?</div>
+                    <div class="faq-answer">The accuracy depends on the source. Manually created captions are typically
+                        very accurate. Auto-generated captions vary in quality depending on audio clarity, accents, and
+                        background noise.</div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">Can I use YTScript for commercial purposes?</div>
+                    <div class="faq-answer">You can use the tool freely. However, the extracted content belongs to the
+                        original creators. If you want to use transcripts commercially, make sure you have the necessary
+                        rights and permissions.</div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Our Story -->
+                <h2>📖 The Story Behind YTScript</h2>
+
+                <div class="story-box">
+                    <p>YTScript started as a personal project. Like many good tools, it was built to scratch an itch.
+                    </p>
+                    <p>I was spending hours manually pausing videos, copying text, and piecing together transcripts.
+                        There had to be a better way. So I built one.</p>
+                    <p>What started as a simple script became a full-featured tool when I realized others had the same
+                        frustration. The positive feedback from early users motivated me to refine the design, add more
+                        features, and make it available to everyone.</p>
+                    <p>Today, YTScript helps thousands of people every day work more efficiently with video content.
+                        <strong>And we're just getting started.</strong>
+                    </p>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Technology -->
+                <h2>🛠️ Technology</h2>
+                <p>YTScript is built with modern web technologies for optimal performance:</p>
+
+                <div class="tech-list">
+                    <span class="tech-badge">Python/Flask Backend</span>
+                    <span class="tech-badge">Vanilla JavaScript</span>
+                    <span class="tech-badge">Modern CSS</span>
+                    <span class="tech-badge">Vercel Hosting</span>
+                    <span class="tech-badge">YouTube API</span>
+                </div>
+
+                <p><strong>We're committed to:</strong></p>
+                <ul>
+                    <li>Fast load times (&lt; 2 seconds)</li>
+                    <li>High availability (99.9% uptime goal)</li>
+                    <li>Regular updates and improvements</li>
+                    <li>Security best practices</li>
+                </ul>
+
+                <div class="section-divider"></div>
+
+                <!-- Roadmap -->
+                <h2>🗺️ Roadmap</h2>
+                <p>We're constantly working to improve YTScript. Here's what's on our radar:</p>
+
+                <div class="roadmap-section">
+                    <h4>🔜 Coming Soon</h4>
+                    <ul>
+                        <li>☐ Batch processing (multiple videos at once)</li>
+                        <li>☐ Browser extension for one-click extraction</li>
+                        <li>☐ API access for developers</li>
+                        <li>☐ Additional export formats (PDF, DOCX)</li>
+                    </ul>
+                </div>
+
+                <div class="roadmap-section">
+                    <h4>💭 Under Consideration</h4>
+                    <ul>
+                        <li>☐ AI-powered transcript summarization</li>
+                        <li>☐ Translation features</li>
+                        <li>☐ Collaboration tools</li>
+                        <li>☐ Premium features for power users</li>
+                    </ul>
+                </div>
+
+                <p>Have a feature request? We'd love to hear from you! <a href="contact.html">Contact us</a>.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Support YTScript -->
+                <h2>💚 Support YTScript</h2>
+                <p>YTScript is free and will always have a free tier. If you find it useful, here are some ways you can
+                    support us:</p>
+
+                <div class="support-grid">
+                    <div class="support-card">
+                        <div class="value-icon">💬</div>
+                        <h4>Spread the Word</h4>
+                        <p>Tell friends and colleagues about YTScript.</p>
+                    </div>
+                    <div class="support-card">
+                        <div class="value-icon">⭐</div>
+                        <h4>Leave Feedback</h4>
+                        <p>Your feedback helps us improve.</p>
+                    </div>
+                    <div class="support-card">
+                        <div class="value-icon">📢</div>
+                        <h4>Allow Ads</h4>
+                        <p>Consider whitelisting YTScript.</p>
+                    </div>
+                    <div class="support-card">
+                        <div class="value-icon">☕</div>
+                        <h4>Buy Us a Coffee</h4>
+                        <p>Support development directly.</p>
+                    </div>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Contact Section -->
+                <h2 id="contact">📬 Contact Us</h2>
+                <p>We love hearing from our users! Whether you have a question, feedback, feature request, or just want
+                    to say hi — we're here for you.</p>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <h4>General Inquiries</h4>
+                        <a href="mailto:contact@ytscript.com">contact@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🔧</div>
+                        <h4>Technical Support</h4>
+                        <a href="mailto:support@ytscript.com">support@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">💼</div>
+                        <h4>Business & Partnerships</h4>
+                        <a href="mailto:business@ytscript.com">business@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">⚖️</div>
+                        <h4>Legal Matters</h4>
+                        <a href="mailto:legal@ytscript.com">legal@ytscript.com</a>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🔒</div>
+                        <h4>Privacy Concerns</h4>
+                        <a href="mailto:privacy@ytscript.com">privacy@ytscript.com</a>
+                    </div>
+                </div>
+
+                <h3>⏱️ Response Time</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Expected Response</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>General Questions</td>
+                            <td>24-48 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Technical Issues</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Bug Reports</td>
+                            <td>24 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Feature Requests</td>
+                            <td>1 week</td>
+                        </tr>
+                        <tr>
+                            <td>Business Inquiries</td>
+                            <td>48-72 hours</td>
+                        </tr>
+                        <tr>
+                            <td>Legal Matters</td>
+                            <td>48-72 hours</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>Response times may be longer during weekends and holidays.</em></p>
+
+                <div class="section-divider"></div>
+
+                <!-- Common Issues -->
+                <h3>🔧 Common Issues & Solutions</h3>
+
+                <div class="issue-item">
+                    <h4>"I can't extract subtitles from a video"</h4>
+                    <ul>
+                        <li>Make sure the video has captions available (check if CC icon appears on YouTube)</li>
+                        <li>Try refreshing the page and extracting again</li>
+                        <li>Some videos have captions disabled by the creator</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"The transcript is inaccurate"</h4>
+                    <ul>
+                        <li>We retrieve existing subtitles from YouTube; we don't create them</li>
+                        <li>Auto-generated captions can have errors</li>
+                        <li>Try selecting manually-created subtitles if available</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"The website is slow"</h4>
+                    <ul>
+                        <li>Try clearing your browser cache</li>
+                        <li>Disable browser extensions temporarily</li>
+                        <li>Try a different browser</li>
+                    </ul>
+                </div>
+
+                <div class="issue-item">
+                    <h4>"Export isn't working"</h4>
+                    <ul>
+                        <li>Make sure you've successfully extracted a transcript first</li>
+                        <li>Check that your browser allows downloads</li>
+                        <li>Try a different export format</li>
+                    </ul>
+                </div>
+
+                <div class="section-divider"></div>
+
+                <!-- Report Bug -->
+                <h3>🐛 Report a Bug</h3>
+                <p>Found something broken? Help us fix it by providing:</p>
+                <ol>
+                    <li><strong>What happened?</strong> (Describe the issue)</li>
+                    <li><strong>What did you expect?</strong> (What should have happened)</li>
+                    <li><strong>Steps to reproduce</strong> (How can we recreate the issue)</li>
+                    <li><strong>Browser & device</strong> (Chrome on Windows, Safari on iPhone, etc.)</li>
+                    <li><strong>Screenshot</strong> (If applicable)</li>
+                </ol>
+                <p>Send bug reports to: <a href="mailto:support@ytscript.com">support@ytscript.com</a> with "Bug Report"
+                    in the subject line.</p>
+
+                <div class="section-divider"></div>
+
+                <!-- Location -->
+                <h3>📍 Location</h3>
+                <p><strong>YTScript</strong><br>
+                    Istanbul, Turkey</p>
+                <p><em>We're a remote-first team serving users globally.</em></p>
+
+                <div class="section-divider"></div>
+
+                <p style="text-align: center; color: var(--text-muted);">
+                    <em>Thank you for using YTScript. We're honored to be part of your workflow. 🙏</em>
+                </p>
+
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                    <strong>Last Updated:</strong> December 27, 2024
+                </p>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">📝</span>
+                    <span class="logo-text">YTScript</span>
+                    <p class="footer-tagline">Free YouTube Subtitle Extractor</p>
+                </div>
+                <nav class="footer-links">
+                    <a href="about.html">About</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="terms.html">Terms of Service</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 YTScript. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const saved = localStorage.getItem('theme');
+        if (saved) document.documentElement.setAttribute('data-theme', saved);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+        });
+    </script>
+</body>
+
+</html>
