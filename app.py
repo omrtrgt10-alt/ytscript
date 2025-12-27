@@ -1,13 +1,23 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from youtube_transcript_api import YouTubeTranscriptApi
+from youtube_transcript_api.proxies import WebshareProxyConfig
 import re
+import os
 
 app = Flask(__name__, static_folder='public', static_url_path='')
 CORS(app)
 
-# Create API instance (new API style)
-api = YouTubeTranscriptApi()
+# Proxy configuration - uses Webshare free proxies if available
+# Set WEBSHARE_TOKEN environment variable in Render dashboard
+WEBSHARE_TOKEN = os.environ.get('WEBSHARE_TOKEN', '')
+
+def get_api():
+    """Get YouTubeTranscriptApi instance, with proxy if available"""
+    if WEBSHARE_TOKEN:
+        proxy_config = WebshareProxyConfig(WEBSHARE_TOKEN)
+        return YouTubeTranscriptApi(proxy_config=proxy_config)
+    return YouTubeTranscriptApi()
 
 def extract_video_id(url):
     """
@@ -61,6 +71,9 @@ def extract_subtitles():
             return jsonify({'error': 'Invalid YouTube URL. Please provide a valid YouTube video URL.'}), 400
         
         try:
+            # Get API instance (with proxy if configured)
+            api = get_api()
+            
             # Auto-detect: fetch first available transcript in any language
             transcript = None
             used_lang = None
@@ -78,7 +91,11 @@ def extract_subtitles():
                         continue
                         
             except Exception as e:
-                return jsonify({'error': f'Could not fetch subtitles: {str(e)}'}), 404
+                error_str = str(e)
+                # More user-friendly error messages
+                if 'IP' in error_str or 'block' in error_str.lower():
+                    return jsonify({'error': 'Service temporarily unavailable. Please try again in a few minutes.'}), 503
+                return jsonify({'error': f'Could not fetch subtitles: {error_str}'}), 404
             
             if transcript is None:
                 return jsonify({'error': 'No captions found for this video.'}), 404
@@ -118,4 +135,8 @@ def extract_subtitles():
 
 if __name__ == '__main__':
     print('🎬 YouTube Subtitle Extractor running at http://localhost:3000')
+    if WEBSHARE_TOKEN:
+        print('✅ Proxy enabled')
+    else:
+        print('⚠️  No proxy configured - set WEBSHARE_TOKEN for better reliability')
     app.run(host='0.0.0.0', port=3000, debug=True)
