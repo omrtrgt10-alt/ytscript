@@ -259,238 +259,6 @@ function initGoogleAdsense() {
 // ==================== 
 // Main Extraction
 // ====================
-
-// CORS proxy for fetching YouTube data from browser
-// These proxies relay requests to bypass CORS restrictions
-const CORS_PROXIES = [
-    (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
-    (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
-    (url) => `https://proxy.cors.sh/${url}`,
-    (url) => `https://thingproxy.freeboard.io/fetch/${url}`
-];
-
-let currentProxyIndex = 0;
-let useServerFallback = false;
-
-async function fetchWithCORS(url) {
-    // If server fallback mode is on, skip client-side
-    if (useServerFallback) {
-        throw new Error('Using server fallback');
-    }
-
-    // Try each proxy until one works
-    for (let i = 0; i < CORS_PROXIES.length; i++) {
-        const proxyIndex = (currentProxyIndex + i) % CORS_PROXIES.length;
-        const proxyUrl = CORS_PROXIES[proxyIndex](url);
-
-        try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
-
-            const response = await fetch(proxyUrl, {
-                signal: controller.signal,
-                headers: {
-                    'Accept': '*/*',
-                    'Origin': window.location.origin
-                }
-            });
-
-            clearTimeout(timeoutId);
-
-            if (response.ok) {
-                const text = await response.text();
-                // Validate we got actual content
-                if (text && text.length > 100 && !text.includes('<!DOCTYPE html>')) {
-                    currentProxyIndex = proxyIndex;
-                    return text;
-                }
-                // If proxy returned HTML error page, continue to next
-                console.warn(`Proxy ${proxyIndex} returned invalid content`);
-            }
-        } catch (e) {
-            console.warn(`Proxy ${proxyIndex} failed:`, e.message);
-        }
-    }
-    throw new Error('All CORS proxies failed');
-}
-
-// Server-side fallback function
-async function fetchFromServer(url) {
-    const response = await fetch('/api/extract', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(data.error || 'Server extraction failed');
-    }
-
-    return data;
-}
-
-function extractVideoId(url) {
-    if (!url) return null;
-
-    // youtu.be format
-    let match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
-    if (match) return match[1];
-
-    // youtube.com/watch?v= format
-    match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
-    if (match) return match[1];
-
-    // youtube.com/embed/ format
-    match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
-    if (match) return match[1];
-
-    // youtube.com/v/ format
-    match = url.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/);
-    if (match) return match[1];
-
-    // Just video ID
-    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
-
-    return null;
-}
-
-async function fetchYouTubeTranscript(videoId) {
-    // Step 1: Fetch the video page to get caption track info
-    const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
-    const html = await fetchWithCORS(watchUrl);
-
-    // Step 2: Extract player response JSON - try multiple patterns
-    let playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});(?:\s*var|<\/script>)/s);
-    if (!playerResponseMatch) {
-        playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?"captions".*?\});/s);
-    }
-    if (!playerResponseMatch) {
-        // Try to find it more broadly
-        playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]*?\});\s*(?:var|const|let|<\/script>)/);
-    }
-
-    if (!playerResponseMatch) {
-        throw new Error('Could not parse video data. The video may be private, age-restricted, or unavailable.');
-    }
-
-    let playerResponse;
-    try {
-        // Clean up the JSON string
-        let jsonStr = playerResponseMatch[1];
-        // Sometimes there's trailing content
-        const lastBrace = jsonStr.lastIndexOf('}');
-        if (lastBrace !== -1) {
-            jsonStr = jsonStr.substring(0, lastBrace + 1);
-        }
-        playerResponse = JSON.parse(jsonStr);
-    } catch (e) {
-        console.error('JSON parse error:', e);
-        throw new Error('Failed to parse video metadata. Please try a different video.');
-    }
-
-    // Step 3: Get caption tracks
-    const captionTracks = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
-
-    if (!captionTracks || captionTracks.length === 0) {
-        throw new Error('No subtitles available for this video. The creator may not have added captions.');
-    }
-
-    // Step 4: Get the first available caption track (prefer manual over auto-generated)
-    let selectedTrack = captionTracks.find(t => t.kind !== 'asr') || captionTracks[0];
-    let captionUrl = selectedTrack.baseUrl;
-    const language = selectedTrack.name?.simpleText || selectedTrack.languageCode || 'Unknown';
-
-    // Add format parameter for JSON (easier to parse)
-    if (!captionUrl.includes('fmt=')) {
-        captionUrl += '&fmt=json3';
-    }
-
-    // Step 5: Fetch the caption data
-    const captionData = await fetchWithCORS(captionUrl);
-
-    // Step 6: Parse captions - try JSON first, then XML
-    let subtitles = [];
-
-    try {
-        // Try JSON format first
-        const jsonData = JSON.parse(captionData);
-        if (jsonData.events) {
-            jsonData.events.forEach(event => {
-                if (event.segs) {
-                    const text = event.segs.map(seg => seg.utf8 || '').join('').trim();
-                    if (text && text !== '\n') {
-                        subtitles.push({
-                            start: (event.tStartMs || 0) / 1000,
-                            dur: (event.dDurationMs || 0) / 1000,
-                            text: text.replace(/\n/g, ' ').trim()
-                        });
-                    }
-                }
-            });
-        }
-    } catch (e) {
-        // Not JSON, try XML
-        console.log('Trying XML format...');
-
-        // Try DOMParser first
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(captionData, 'text/xml');
-        const textElements = xmlDoc.querySelectorAll('text');
-
-        if (textElements.length > 0) {
-            textElements.forEach(el => {
-                const start = parseFloat(el.getAttribute('start') || '0');
-                const dur = parseFloat(el.getAttribute('dur') || '0');
-                const text = el.textContent
-                    .replace(/&amp;/g, '&')
-                    .replace(/&lt;/g, '<')
-                    .replace(/&gt;/g, '>')
-                    .replace(/&quot;/g, '"')
-                    .replace(/&#39;/g, "'")
-                    .replace(/\n/g, ' ')
-                    .trim();
-
-                if (text) {
-                    subtitles.push({ start, dur, text });
-                }
-            });
-        } else {
-            // Fallback: regex parsing
-            const regex = /<text start="([\d.]+)" dur="([\d.]+)"[^>]*>([^<]*)<\/text>/g;
-            let match;
-            while ((match = regex.exec(captionData)) !== null) {
-                const text = match[3]
-                    .replace(/&amp;/g, '&')
-                    .replace(/&lt;/g, '<')
-                    .replace(/&gt;/g, '>')
-                    .replace(/&quot;/g, '"')
-                    .replace(/&#39;/g, "'")
-                    .trim();
-                if (text) {
-                    subtitles.push({
-                        start: parseFloat(match[1]),
-                        dur: parseFloat(match[2]),
-                        text
-                    });
-                }
-            }
-        }
-    }
-
-    if (subtitles.length === 0) {
-        console.error('Caption data sample:', captionData.substring(0, 500));
-        throw new Error('Could not parse captions. Please try a different video.');
-    }
-
-    return {
-        videoId,
-        language,
-        subtitles
-    };
-}
-
 async function handleExtract() {
     const url = urlInput.value.trim();
 
@@ -515,40 +283,17 @@ async function handleExtract() {
     hideError();
     setLoading(true);
 
-    let data = null;
-    let method = 'unknown';
-
     try {
-        const videoId = extractVideoId(url);
+        const response = await fetch('/api/extract', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ url })
+        });
 
-        if (!videoId) {
-            throw new Error('Could not extract video ID from URL');
-        }
+        const data = await response.json();
 
-        // Strategy 1: Try client-side extraction first (uses user's IP)
-        if (!useServerFallback) {
-            try {
-                console.log('Trying client-side extraction...');
-                data = await fetchYouTubeTranscript(videoId);
-                method = 'client_side';
-                console.log('Client-side extraction succeeded!');
-            } catch (clientError) {
-                console.warn('Client-side extraction failed:', clientError.message);
-                // Fall through to server-side
-            }
-        }
-
-        // Strategy 2: Server-side fallback
-        if (!data) {
-            console.log('Trying server-side extraction...');
-            try {
-                data = await fetchFromServer(url);
-                method = 'server_side';
-                console.log('Server-side extraction succeeded!');
-            } catch (serverError) {
-                console.error('Server-side extraction failed:', serverError.message);
-                throw new Error('Unable to extract subtitles. The video may not have captions or may be restricted.');
-            }
+        if (!response.ok) {
+            throw new Error(data.error || 'Failed to extract subtitles');
         }
 
         currentSubtitles = data.subtitles;
@@ -558,9 +303,7 @@ async function handleExtract() {
         displaySubtitles(data);
         saveToHistory(data.videoId, data.language);
         incrementExtractionCount();
-
-        // Track success
-        trackEvent('extract_success', { method, video_id: data.videoId });
+        trackEvent('extract_success', { video_id: data.videoId });
 
     } catch (error) {
         console.error('Extraction error:', error);
@@ -570,6 +313,7 @@ async function handleExtract() {
         setLoading(false);
     }
 }
+
 
 function displaySubtitles(data) {
     emptyState.classList.add('hidden');
