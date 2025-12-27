@@ -321,17 +321,33 @@ async function fetchYouTubeTranscript(videoId) {
     const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
     const html = await fetchWithCORS(watchUrl);
 
-    // Step 2: Extract player response JSON
-    const playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});/s);
+    // Step 2: Extract player response JSON - try multiple patterns
+    let playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});(?:\s*var|<\/script>)/s);
     if (!playerResponseMatch) {
-        throw new Error('Could not parse video data. The video may be private or unavailable.');
+        playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.*?"captions".*?\});/s);
+    }
+    if (!playerResponseMatch) {
+        // Try to find it more broadly
+        playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]*?\});\s*(?:var|const|let|<\/script>)/);
+    }
+
+    if (!playerResponseMatch) {
+        throw new Error('Could not parse video data. The video may be private, age-restricted, or unavailable.');
     }
 
     let playerResponse;
     try {
-        playerResponse = JSON.parse(playerResponseMatch[1]);
+        // Clean up the JSON string
+        let jsonStr = playerResponseMatch[1];
+        // Sometimes there's trailing content
+        const lastBrace = jsonStr.lastIndexOf('}');
+        if (lastBrace !== -1) {
+            jsonStr = jsonStr.substring(0, lastBrace + 1);
+        }
+        playerResponse = JSON.parse(jsonStr);
     } catch (e) {
-        throw new Error('Failed to parse video metadata.');
+        console.error('JSON parse error:', e);
+        throw new Error('Failed to parse video metadata. Please try a different video.');
     }
 
     // Step 3: Get caption tracks
@@ -343,38 +359,90 @@ async function fetchYouTubeTranscript(videoId) {
 
     // Step 4: Get the first available caption track (prefer manual over auto-generated)
     let selectedTrack = captionTracks.find(t => t.kind !== 'asr') || captionTracks[0];
-    const captionUrl = selectedTrack.baseUrl;
+    let captionUrl = selectedTrack.baseUrl;
     const language = selectedTrack.name?.simpleText || selectedTrack.languageCode || 'Unknown';
 
-    // Step 5: Fetch the caption XML
-    const captionXml = await fetchWithCORS(captionUrl);
-
-    // Step 6: Parse XML to extract subtitles
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(captionXml, 'text/xml');
-    const textElements = xmlDoc.querySelectorAll('text');
-
-    if (textElements.length === 0) {
-        throw new Error('Caption file is empty.');
+    // Add format parameter for JSON (easier to parse)
+    if (!captionUrl.includes('fmt=')) {
+        captionUrl += '&fmt=json3';
     }
 
-    const subtitles = [];
-    textElements.forEach(el => {
-        const start = parseFloat(el.getAttribute('start') || '0');
-        const dur = parseFloat(el.getAttribute('dur') || '0');
-        const text = el.textContent
-            .replace(/&amp;/g, '&')
-            .replace(/&lt;/g, '<')
-            .replace(/&gt;/g, '>')
-            .replace(/&quot;/g, '"')
-            .replace(/&#39;/g, "'")
-            .replace(/\n/g, ' ')
-            .trim();
+    // Step 5: Fetch the caption data
+    const captionData = await fetchWithCORS(captionUrl);
 
-        if (text) {
-            subtitles.push({ start, dur, text });
+    // Step 6: Parse captions - try JSON first, then XML
+    let subtitles = [];
+
+    try {
+        // Try JSON format first
+        const jsonData = JSON.parse(captionData);
+        if (jsonData.events) {
+            jsonData.events.forEach(event => {
+                if (event.segs) {
+                    const text = event.segs.map(seg => seg.utf8 || '').join('').trim();
+                    if (text && text !== '\n') {
+                        subtitles.push({
+                            start: (event.tStartMs || 0) / 1000,
+                            dur: (event.dDurationMs || 0) / 1000,
+                            text: text.replace(/\n/g, ' ').trim()
+                        });
+                    }
+                }
+            });
         }
-    });
+    } catch (e) {
+        // Not JSON, try XML
+        console.log('Trying XML format...');
+
+        // Try DOMParser first
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(captionData, 'text/xml');
+        const textElements = xmlDoc.querySelectorAll('text');
+
+        if (textElements.length > 0) {
+            textElements.forEach(el => {
+                const start = parseFloat(el.getAttribute('start') || '0');
+                const dur = parseFloat(el.getAttribute('dur') || '0');
+                const text = el.textContent
+                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&#39;/g, "'")
+                    .replace(/\n/g, ' ')
+                    .trim();
+
+                if (text) {
+                    subtitles.push({ start, dur, text });
+                }
+            });
+        } else {
+            // Fallback: regex parsing
+            const regex = /<text start="([\d.]+)" dur="([\d.]+)"[^>]*>([^<]*)<\/text>/g;
+            let match;
+            while ((match = regex.exec(captionData)) !== null) {
+                const text = match[3]
+                    .replace(/&amp;/g, '&')
+                    .replace(/&lt;/g, '<')
+                    .replace(/&gt;/g, '>')
+                    .replace(/&quot;/g, '"')
+                    .replace(/&#39;/g, "'")
+                    .trim();
+                if (text) {
+                    subtitles.push({
+                        start: parseFloat(match[1]),
+                        dur: parseFloat(match[2]),
+                        text
+                    });
+                }
+            }
+        }
+    }
+
+    if (subtitles.length === 0) {
+        console.error('Caption data sample:', captionData.substring(0, 500));
+        throw new Error('Could not parse captions. Please try a different video.');
+    }
 
     return {
         videoId,
