@@ -259,6 +259,130 @@ function initGoogleAdsense() {
 // ==================== 
 // Main Extraction
 // ====================
+
+// CORS proxy for fetching YouTube data from browser
+const CORS_PROXIES = [
+    'https://api.allorigins.win/raw?url=',
+    'https://corsproxy.io/?',
+    'https://api.codetabs.com/v1/proxy?quest='
+];
+
+let currentProxyIndex = 0;
+
+async function fetchWithCORS(url) {
+    // Try each proxy until one works
+    for (let i = 0; i < CORS_PROXIES.length; i++) {
+        const proxyIndex = (currentProxyIndex + i) % CORS_PROXIES.length;
+        const proxyUrl = CORS_PROXIES[proxyIndex] + encodeURIComponent(url);
+
+        try {
+            const response = await fetch(proxyUrl, {
+                headers: { 'Accept': 'text/html,application/xhtml+xml,application/xml' }
+            });
+
+            if (response.ok) {
+                currentProxyIndex = proxyIndex; // Remember working proxy
+                return await response.text();
+            }
+        } catch (e) {
+            console.warn(`Proxy ${proxyIndex} failed, trying next...`);
+        }
+    }
+    throw new Error('All proxies failed');
+}
+
+function extractVideoId(url) {
+    if (!url) return null;
+
+    // youtu.be format
+    let match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+
+    // youtube.com/watch?v= format
+    match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+
+    // youtube.com/embed/ format
+    match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+
+    // youtube.com/v/ format
+    match = url.match(/youtube\.com\/v\/([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+
+    // Just video ID
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+
+    return null;
+}
+
+async function fetchYouTubeTranscript(videoId) {
+    // Step 1: Fetch the video page to get caption track info
+    const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+    const html = await fetchWithCORS(watchUrl);
+
+    // Step 2: Extract player response JSON
+    const playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*(\{.+?\});/s);
+    if (!playerResponseMatch) {
+        throw new Error('Could not parse video data. The video may be private or unavailable.');
+    }
+
+    let playerResponse;
+    try {
+        playerResponse = JSON.parse(playerResponseMatch[1]);
+    } catch (e) {
+        throw new Error('Failed to parse video metadata.');
+    }
+
+    // Step 3: Get caption tracks
+    const captionTracks = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+
+    if (!captionTracks || captionTracks.length === 0) {
+        throw new Error('No subtitles available for this video. The creator may not have added captions.');
+    }
+
+    // Step 4: Get the first available caption track (prefer manual over auto-generated)
+    let selectedTrack = captionTracks.find(t => t.kind !== 'asr') || captionTracks[0];
+    const captionUrl = selectedTrack.baseUrl;
+    const language = selectedTrack.name?.simpleText || selectedTrack.languageCode || 'Unknown';
+
+    // Step 5: Fetch the caption XML
+    const captionXml = await fetchWithCORS(captionUrl);
+
+    // Step 6: Parse XML to extract subtitles
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(captionXml, 'text/xml');
+    const textElements = xmlDoc.querySelectorAll('text');
+
+    if (textElements.length === 0) {
+        throw new Error('Caption file is empty.');
+    }
+
+    const subtitles = [];
+    textElements.forEach(el => {
+        const start = parseFloat(el.getAttribute('start') || '0');
+        const dur = parseFloat(el.getAttribute('dur') || '0');
+        const text = el.textContent
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/\n/g, ' ')
+            .trim();
+
+        if (text) {
+            subtitles.push({ start, dur, text });
+        }
+    });
+
+    return {
+        videoId,
+        language,
+        subtitles
+    };
+}
+
 async function handleExtract() {
     const url = urlInput.value.trim();
 
@@ -284,17 +408,14 @@ async function handleExtract() {
     setLoading(true);
 
     try {
-        const response = await fetch('/api/extract', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url })
-        });
+        const videoId = extractVideoId(url);
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            throw new Error(data.error || 'Failed to extract subtitles');
+        if (!videoId) {
+            throw new Error('Could not extract video ID from URL');
         }
+
+        // Client-side extraction - uses user's browser IP
+        const data = await fetchYouTubeTranscript(videoId);
 
         currentSubtitles = data.subtitles;
         currentVideoId = data.videoId;
@@ -302,11 +423,22 @@ async function handleExtract() {
 
         displaySubtitles(data);
         saveToHistory(data.videoId, data.language);
-        incrementExtractionCount();  // Track usage
+        incrementExtractionCount();
+
+        // Track success
+        trackEvent('extract_success', { method: 'client_side', video_id: videoId });
 
     } catch (error) {
-        showError(error.message);
         console.error('Extraction error:', error);
+
+        // User-friendly error messages
+        let errorMsg = error.message;
+        if (errorMsg.includes('proxy') || errorMsg.includes('fetch')) {
+            errorMsg = 'Network error. Please check your internet connection and try again.';
+        }
+
+        showError(errorMsg);
+        trackEvent('extract_error', { error: error.message });
     } finally {
         setLoading(false);
     }
