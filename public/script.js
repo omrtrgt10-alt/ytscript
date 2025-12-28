@@ -257,8 +257,25 @@ function initGoogleAdsense() {
 }
 
 // ==================== 
-// Main Extraction
+// Main Extraction (Client-Side)
 // ====================
+
+// CORS Proxies for fetching YouTube data from browser
+// User's residential IP is used - never blocked by YouTube
+const CORS_PROXIES = [
+    url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+    url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`
+];
+
+// Invidious instances for caption API
+const INVIDIOUS_INSTANCES = [
+    'https://inv.nadeko.net',
+    'https://invidious.privacyredirect.com',
+    'https://invidious.nerdvpn.de',
+    'https://iv.datura.network'
+];
+
 async function handleExtract() {
     const url = urlInput.value.trim();
 
@@ -283,27 +300,53 @@ async function handleExtract() {
     hideError();
     setLoading(true);
 
+    const videoId = extractVideoId(url);
+    if (!videoId) {
+        showError('Could not extract video ID');
+        setLoading(false);
+        return;
+    }
+
     try {
-        const response = await fetch('/api/extract', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ url })
-        });
+        let result = null;
 
-        const data = await response.json();
+        // Strategy 1: Try Invidious API (most reliable, independent service)
+        result = await tryInvidiousExtraction(videoId);
 
-        if (!response.ok) {
-            throw new Error(data.error || 'Failed to extract subtitles');
+        // Strategy 2: Try server-side API (may be blocked)
+        if (!result) {
+            try {
+                const response = await fetch('/api/extract', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                const data = await response.json();
+                if (response.ok && data.subtitles?.length > 0) {
+                    result = data;
+                }
+            } catch (e) {
+                console.log('Server-side extraction failed, trying client-side...');
+            }
         }
 
-        currentSubtitles = data.subtitles;
-        currentVideoId = data.videoId;
-        currentLanguage = data.language;
+        // Strategy 3: Try client-side extraction via CORS proxy
+        if (!result) {
+            result = await tryClientSideExtraction(videoId);
+        }
 
-        displaySubtitles(data);
-        saveToHistory(data.videoId, data.language);
+        if (!result || !result.subtitles?.length) {
+            throw new Error('Could not extract subtitles. This video may not have captions.');
+        }
+
+        currentSubtitles = result.subtitles;
+        currentVideoId = result.videoId || videoId;
+        currentLanguage = result.language || 'Auto';
+
+        displaySubtitles(result);
+        saveToHistory(currentVideoId, currentLanguage);
         incrementExtractionCount();
-        trackEvent('extract_success', { video_id: data.videoId });
+        trackEvent('extract_success', { video_id: currentVideoId, method: result.source || 'unknown' });
 
     } catch (error) {
         console.error('Extraction error:', error);
@@ -312,6 +355,189 @@ async function handleExtract() {
     } finally {
         setLoading(false);
     }
+}
+
+function extractVideoId(url) {
+    if (!url) return null;
+    let match = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+    match = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+    match = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+    if (match) return match[1];
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) return url;
+    return null;
+}
+
+// Strategy 1: Invidious API
+async function tryInvidiousExtraction(videoId) {
+    for (const instance of INVIDIOUS_INSTANCES) {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+            const response = await fetch(`${instance}/api/v1/captions/${videoId}`, {
+                signal: controller.signal,
+                headers: { 'Accept': 'application/json' }
+            });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) continue;
+
+            const data = await response.json();
+            if (!data.captions?.length) continue;
+
+            // Get first caption track
+            const caption = data.captions.find(c => !c.label?.toLowerCase().includes('auto')) || data.captions[0];
+
+            // Fetch caption content
+            const captionUrl = `${instance}${caption.url}`;
+            const captionRes = await fetch(captionUrl);
+            if (!captionRes.ok) continue;
+
+            const vttContent = await captionRes.text();
+            const subtitles = parseVTT(vttContent);
+
+            if (subtitles.length > 0) {
+                console.log(`✓ Invidious extraction successful from ${instance}`);
+                return {
+                    success: true,
+                    videoId,
+                    language: caption.label || 'Unknown',
+                    subtitles,
+                    source: 'invidious'
+                };
+            }
+        } catch (e) {
+            console.log(`Invidious ${instance} failed:`, e.message);
+            continue;
+        }
+    }
+    return null;
+}
+
+// Strategy 2: Client-side extraction via CORS proxy
+async function tryClientSideExtraction(videoId) {
+    for (const proxyFn of CORS_PROXIES) {
+        try {
+            const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
+            const proxyUrl = proxyFn(watchUrl);
+
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+            const response = await fetch(proxyUrl, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (!response.ok) continue;
+
+            const html = await response.text();
+
+            // Extract ytInitialPlayerResponse
+            const match = html.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]*?\});\s*(?:var|const|let|<\/script>)/);
+            if (!match) continue;
+
+            // Parse JSON carefully
+            let playerResponse;
+            try {
+                let jsonStr = match[1];
+                let braceCount = 0, endIdx = jsonStr.length;
+                for (let i = 0; i < jsonStr.length; i++) {
+                    if (jsonStr[i] === '{') braceCount++;
+                    else if (jsonStr[i] === '}') braceCount--;
+                    if (braceCount === 0 && i > 0) { endIdx = i + 1; break; }
+                }
+                playerResponse = JSON.parse(jsonStr.substring(0, endIdx));
+            } catch (e) { continue; }
+
+            const tracks = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
+            if (!tracks?.length) continue;
+
+            const track = tracks.find(t => t.kind !== 'asr') || tracks[0];
+            const captionUrl = track.baseUrl;
+            const language = track.name?.simpleText || track.languageCode || 'Unknown';
+
+            // Fetch captions via proxy
+            const captionProxyUrl = proxyFn(captionUrl);
+            const captionRes = await fetch(captionProxyUrl);
+            if (!captionRes.ok) continue;
+
+            const captionXml = await captionRes.text();
+            const subtitles = parseXMLCaptions(captionXml);
+
+            if (subtitles.length > 0) {
+                console.log('✓ Client-side extraction successful');
+                return {
+                    success: true,
+                    videoId,
+                    language,
+                    subtitles,
+                    source: 'client'
+                };
+            }
+        } catch (e) {
+            console.log('CORS proxy failed:', e.message);
+            continue;
+        }
+    }
+    return null;
+}
+
+// Parse WebVTT format
+function parseVTT(vtt) {
+    const subtitles = [];
+    const lines = vtt.split('\n');
+    let start = 0, end = 0, text = '';
+
+    for (const line of lines) {
+        const tsMatch = line.match(/(\d{2}:\d{2}:\d{2}[.,]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[.,]\d{3})/);
+        if (tsMatch) {
+            if (text.trim()) {
+                subtitles.push({ start, dur: end - start, text: text.trim() });
+            }
+            start = parseVTTTime(tsMatch[1]);
+            end = parseVTTTime(tsMatch[2]);
+            text = '';
+        } else if (line.trim() && !line.startsWith('WEBVTT') && !/^\d+$/.test(line.trim())) {
+            text += ' ' + line.replace(/<[^>]+>/g, '');
+        }
+    }
+    if (text.trim()) {
+        subtitles.push({ start, dur: end - start, text: text.trim() });
+    }
+    return subtitles;
+}
+
+function parseVTTTime(ts) {
+    const p = ts.replace(',', '.').split(':');
+    return parseFloat(p[0]) * 3600 + parseFloat(p[1]) * 60 + parseFloat(p[2]);
+}
+
+// Parse YouTube XML caption format
+function parseXMLCaptions(xml) {
+    const subtitles = [];
+    const regex = /<text\s+start="([\d.]+)"(?:\s+dur="([\d.]+)")?[^>]*>([^<]*(?:<[^>]+>[^<]*)*)<\/text>/g;
+    let match;
+    while ((match = regex.exec(xml)) !== null) {
+        const text = match[3]
+            .replace(/<[^>]+>/g, '')
+            .replace(/&amp;/g, '&')
+            .replace(/&lt;/g, '<')
+            .replace(/&gt;/g, '>')
+            .replace(/&quot;/g, '"')
+            .replace(/&#39;/g, "'")
+            .replace(/&#(\d+);/g, (m, c) => String.fromCharCode(parseInt(c)))
+            .replace(/\n/g, ' ')
+            .trim();
+        if (text) {
+            subtitles.push({
+                start: parseFloat(match[1]),
+                dur: parseFloat(match[2] || '0'),
+                text
+            });
+        }
+    }
+    return subtitles;
 }
 
 
