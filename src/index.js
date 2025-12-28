@@ -1,7 +1,21 @@
 /**
  * YTScript - Cloudflare Workers API
  * YouTube Subtitle Extractor
+ * 
+ * Hybrid Strategy:
+ * 1. Try Invidious API (public instances, no IP blocking)
+ * 2. Fallback to direct YouTube scraping
  */
+
+// Public Invidious instances that provide API access
+const INVIDIOUS_INSTANCES = [
+    'https://invidious.io',
+    'https://vid.puffyan.us',
+    'https://invidious.snopyta.org',
+    'https://yewtu.be',
+    'https://invidious.kavin.rocks',
+    'https://inv.riverside.rocks'
+];
 
 export default {
     async fetch(request, env) {
@@ -28,8 +42,27 @@ export default {
                     return jsonResponse({ error: 'Invalid YouTube URL' }, 400);
                 }
 
-                const result = await fetchTranscript(videoId);
-                return jsonResponse(result);
+                // Try multiple strategies
+                let result = null;
+                let lastError = null;
+
+                // Strategy 1: Invidious API (most reliable, no IP blocking)
+                result = await tryInvidiousAPI(videoId);
+                if (result) {
+                    return jsonResponse(result);
+                }
+
+                // Strategy 2: Direct YouTube (may be blocked)
+                try {
+                    result = await fetchFromYouTube(videoId);
+                    if (result) {
+                        return jsonResponse(result);
+                    }
+                } catch (e) {
+                    lastError = e;
+                }
+
+                throw new Error(lastError?.message || 'Could not extract subtitles');
 
             } catch (error) {
                 console.error('API Error:', error);
@@ -80,7 +113,123 @@ function extractVideoId(url) {
     return null;
 }
 
-async function fetchTranscript(videoId) {
+/**
+ * Strategy 1: Invidious API
+ * Invidious is a YouTube frontend that provides a public API
+ * Less likely to be blocked than direct YouTube requests
+ */
+async function tryInvidiousAPI(videoId) {
+    for (const instance of INVIDIOUS_INSTANCES) {
+        try {
+            // Get video captions from Invidious API
+            const captionsUrl = `${instance}/api/v1/captions/${videoId}`;
+            const response = await fetch(captionsUrl, {
+                headers: { 'Accept': 'application/json' },
+                cf: { cacheTtl: 300 } // Cache for 5 minutes
+            });
+
+            if (!response.ok) continue;
+
+            const data = await response.json();
+
+            if (!data.captions || data.captions.length === 0) {
+                continue;
+            }
+
+            // Get the first available caption track
+            const caption = data.captions.find(c => !c.label.includes('auto')) || data.captions[0];
+            const language = caption.label || 'Unknown';
+
+            // Fetch the actual caption content
+            const captionContentUrl = `${instance}${caption.url}`;
+            const captionResponse = await fetch(captionContentUrl);
+
+            if (!captionResponse.ok) continue;
+
+            const captionVtt = await captionResponse.text();
+            const subtitles = parseVTT(captionVtt);
+
+            if (subtitles.length > 0) {
+                return {
+                    success: true,
+                    videoId,
+                    language,
+                    subtitles,
+                    source: 'invidious'
+                };
+            }
+        } catch (e) {
+            console.log(`Invidious instance ${instance} failed:`, e.message);
+            continue;
+        }
+    }
+    return null;
+}
+
+/**
+ * Parse WebVTT format captions
+ */
+function parseVTT(vttContent) {
+    const subtitles = [];
+    const lines = vttContent.split('\n');
+
+    let currentStart = 0;
+    let currentEnd = 0;
+    let currentText = '';
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
+        // Check for timestamp line (00:00:00.000 --> 00:00:00.000)
+        const timestampMatch = line.match(/(\d{2}:\d{2}:\d{2}[.,]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[.,]\d{3})/);
+
+        if (timestampMatch) {
+            // Save previous subtitle if exists
+            if (currentText) {
+                subtitles.push({
+                    start: currentStart,
+                    dur: currentEnd - currentStart,
+                    text: currentText.trim()
+                });
+            }
+
+            currentStart = parseVTTTime(timestampMatch[1]);
+            currentEnd = parseVTTTime(timestampMatch[2]);
+            currentText = '';
+        } else if (line && !line.startsWith('WEBVTT') && !line.match(/^\d+$/)) {
+            // Text line (not header, not cue number)
+            if (currentText) currentText += ' ';
+            currentText += line.replace(/<[^>]+>/g, ''); // Remove VTT tags
+        }
+    }
+
+    // Add last subtitle
+    if (currentText) {
+        subtitles.push({
+            start: currentStart,
+            dur: currentEnd - currentStart,
+            text: currentText.trim()
+        });
+    }
+
+    return subtitles;
+}
+
+/**
+ * Parse VTT timestamp to seconds
+ */
+function parseVTTTime(timeStr) {
+    const parts = timeStr.replace(',', '.').split(':');
+    if (parts.length === 3) {
+        return parseFloat(parts[0]) * 3600 + parseFloat(parts[1]) * 60 + parseFloat(parts[2]);
+    }
+    return 0;
+}
+
+/**
+ * Strategy 2: Direct YouTube scraping (fallback)
+ */
+async function fetchFromYouTube(videoId) {
     const watchUrl = `https://www.youtube.com/watch?v=${videoId}`;
 
     const response = await fetch(watchUrl, {
@@ -104,13 +253,12 @@ async function fetchTranscript(videoId) {
     }
 
     if (!playerResponseMatch) {
-        throw new Error('Could not parse video data. Video may be private or unavailable.');
+        throw new Error('Could not parse video data');
     }
 
     let playerResponse;
     try {
         let jsonStr = playerResponseMatch[1];
-        // Balance braces to find complete JSON
         let braceCount = 0;
         let endIndex = jsonStr.length;
         for (let i = 0; i < jsonStr.length; i++) {
@@ -130,34 +278,47 @@ async function fetchTranscript(videoId) {
     const captionTracks = playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;
 
     if (!captionTracks || captionTracks.length === 0) {
-        throw new Error('No subtitles available for this video');
+        throw new Error('No subtitles available');
     }
 
-    // Prefer manual captions over auto-generated
     const selectedTrack = captionTracks.find(t => t.kind !== 'asr') || captionTracks[0];
-    let captionUrl = selectedTrack.baseUrl;
+    const captionUrl = selectedTrack.baseUrl;
     const language = selectedTrack.name?.simpleText || selectedTrack.languageCode || 'Unknown';
 
-    // Fetch captions (default XML format is more reliable)
     const captionResponse = await fetch(captionUrl);
     if (!captionResponse.ok) {
         throw new Error('Failed to fetch captions');
     }
 
-    const captionData = await captionResponse.text();
-    let subtitles = [];
+    const captionXml = await captionResponse.text();
+    const subtitles = parseXMLCaptions(captionXml);
 
-    // Parse XML caption data
-    // Format: <text start="0.5" dur="2.5">Hello world</text>
+    if (subtitles.length === 0) {
+        throw new Error('Could not parse captions');
+    }
+
+    return {
+        success: true,
+        videoId,
+        language,
+        subtitles,
+        source: 'youtube'
+    };
+}
+
+/**
+ * Parse YouTube XML caption format
+ */
+function parseXMLCaptions(xml) {
+    const subtitles = [];
     const textRegex = /<text\s+start="([\d.]+)"(?:\s+dur="([\d.]+)")?[^>]*>([^<]*(?:<[^>]+>[^<]*)*)<\/text>/g;
     let match;
 
-    while ((match = textRegex.exec(captionData)) !== null) {
+    while ((match = textRegex.exec(xml)) !== null) {
         const start = parseFloat(match[1]);
         const dur = parseFloat(match[2] || '0');
-        // Clean up text - remove HTML tags and decode entities
         let text = match[3]
-            .replace(/<[^>]+>/g, '') // Remove any HTML tags
+            .replace(/<[^>]+>/g, '')
             .replace(/&amp;/g, '&')
             .replace(/&lt;/g, '<')
             .replace(/&gt;/g, '>')
@@ -173,42 +334,5 @@ async function fetchTranscript(videoId) {
         }
     }
 
-    // If XML parsing failed, try JSON format
-    if (subtitles.length === 0) {
-        try {
-            // Refetch with JSON format
-            const jsonUrl = captionUrl + (captionUrl.includes('?') ? '&' : '?') + 'fmt=json3';
-            const jsonResponse = await fetch(jsonUrl);
-            if (jsonResponse.ok) {
-                const jsonData = await jsonResponse.json();
-                if (jsonData.events) {
-                    for (const event of jsonData.events) {
-                        if (event.segs) {
-                            const text = event.segs.map(seg => seg.utf8 || '').join('').trim();
-                            if (text && text !== '\n') {
-                                subtitles.push({
-                                    start: (event.tStartMs || 0) / 1000,
-                                    dur: (event.dDurationMs || 0) / 1000,
-                                    text: text.replace(/\n/g, ' ').trim()
-                                });
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (e) {
-            // JSON parsing also failed
-        }
-    }
-
-    if (subtitles.length === 0) {
-        throw new Error('Could not parse captions. The video may have restricted captions.');
-    }
-
-    return {
-        success: true,
-        videoId,
-        language,
-        subtitles
-    };
+    return subtitles;
 }
