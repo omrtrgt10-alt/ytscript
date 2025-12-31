@@ -68,11 +68,76 @@ document.addEventListener('DOMContentLoaded', () => {
     acceptCookies?.addEventListener('click', acceptCookieConsent);
     clearHistory?.addEventListener('click', clearAllHistory);
 
+    // Check for bookmarklet data first
+    if (handleBookmarkletData()) {
+        return; // Bookmarklet data was processed
+    }
+
     urlInput.focus();
 
     // Auto-detect YouTube URL from clipboard
     checkClipboardForYouTubeUrl();
 });
+
+// ==================== 
+// Bookmarklet Data Handler
+// ====================
+function handleBookmarkletData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isBookmarklet = urlParams.get('bookmarklet') === '1';
+    const encodedData = urlParams.get('data');
+
+    if (!isBookmarklet || !encodedData) {
+        return false;
+    }
+
+    try {
+        // Decode the data
+        const jsonStr = decodeURIComponent(escape(atob(encodedData)));
+        const data = JSON.parse(jsonStr);
+
+        if (!data.subtitles || data.subtitles.length === 0) {
+            showError('No subtitles in bookmarklet data');
+            return true;
+        }
+
+        // Set current state
+        currentSubtitles = data.subtitles;
+        currentVideoId = data.videoId || 'unknown';
+        currentLanguage = data.language || 'Unknown';
+
+        // Display subtitles
+        displaySubtitles({
+            videoId: currentVideoId,
+            language: currentLanguage,
+            subtitles: currentSubtitles
+        });
+
+        // Hide bookmarklet section since we have results
+        const bookmarkletSection = document.getElementById('bookmarkletSection');
+        if (bookmarkletSection) {
+            bookmarkletSection.style.display = 'none';
+        }
+
+        // Save to history
+        saveToHistory(currentVideoId, currentLanguage);
+
+        // Show success toast
+        showToast(`✅ Extracted ${currentSubtitles.length} subtitles via bookmarklet!`, 'success');
+
+        // Track event
+        trackEvent('bookmarklet_success', { video_id: currentVideoId });
+
+        // Clean URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        return true;
+    } catch (error) {
+        console.error('Bookmarklet data error:', error);
+        showError('Invalid bookmarklet data');
+        return true;
+    }
+}
 
 // ==================== 
 // Clipboard Auto-Paste

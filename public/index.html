@@ -208,6 +208,37 @@
 
                 <div id="errorMessage" class="error-msg"></div>
 
+                <!-- Bookmarklet Section -->
+                <div id="bookmarkletSection" class="bookmarklet-section">
+                    <div class="bookmarklet-header">
+                        <span class="bookmarklet-badge">✨ NEW</span>
+                        <span class="bookmarklet-title">Works on ANY video!</span>
+                    </div>
+                    <div class="bookmarklet-content">
+                        <p class="bookmarklet-instructions">
+                            Drag this button to your bookmark bar, then click it on any YouTube video:
+                        </p>
+                        <a id="bookmarkletBtn" class="bookmarklet-btn"
+                            href="javascript:(function(){const YTSCRIPT_URL='https://ytscript.pages.dev';if(!window.location.hostname.includes('youtube.com')){alert('Please use this on a YouTube video page!');return;}const urlParams=new URLSearchParams(window.location.search);const videoId=urlParams.get('v');if(!videoId){alert('Could not find video ID.');return;}let playerResponse=window.ytInitialPlayerResponse;if(!playerResponse){const scripts=document.getElementsByTagName('script');for(const script of scripts){const text=script.textContent;const match=text.match(/ytInitialPlayerResponse\s*=\s*(\{[\s\S]*?\});/);if(match){try{let jsonStr=match[1];let braceCount=0,endIdx=jsonStr.length;for(let i=0;i<jsonStr.length;i++){if(jsonStr[i]==='{')braceCount++;else if(jsonStr[i]==='}')braceCount--;if(braceCount===0&&i>0){endIdx=i+1;break;}}playerResponse=JSON.parse(jsonStr.substring(0,endIdx));break;}catch(e){}}}}if(!playerResponse){alert('Could not extract video data. Try refreshing.');return;}const captionTracks=playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;if(!captionTracks||captionTracks.length===0){alert('No subtitles available for this video.');return;}const track=captionTracks.find(t=>t.kind!=='asr')||captionTracks[0];const captionUrl=track.baseUrl;const language=track.name?.simpleText||track.languageCode||'Unknown';const title=playerResponse?.videoDetails?.title||'Unknown';const loadingDiv=document.createElement('div');loadingDiv.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:999999;color:white;font-size:24px;font-family:sans-serif;';loadingDiv.innerHTML='⏳ Extracting subtitles...';document.body.appendChild(loadingDiv);fetch(captionUrl).then(res=>res.text()).then(xml=>{const subtitles=[];const regex=/<text start=\"
+                            ([\d.]+)\"(?:\s+dur=\"([\d.]+)\")?[^>]*>([^<]*(?:<[^>]+>[^<]*)*)<\ /text>/g;let
+                                    match;while((match=regex.exec(xml))!==null){const text=match[3].replace(/<[^>
+                                        ]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace( /&gt;/g,'>
+                                            ').replace(/&quot;/g,'\"').replace(/&#39;/g,\"'\").replace(/&#(\d+);/g,(m,c)=>String.fromCharCode(parseInt(c))).replace(/\n/g,'
+                                            ').trim();if(text){subtitles.push({start:parseFloat(match[1]),dur:parseFloat(match[2]||'0'),text});}}if(subtitles.length===0){document.body.removeChild(loadingDiv);alert('Could
+                                            not parse captions.');return;}const
+                                            data={videoId,title,language,subtitles,timestamp:Date.now()};const
+                                            encodedData=btoa(unescape(encodeURIComponent(JSON.stringify(data))));document.body.removeChild(loadingDiv);window.open(YTSCRIPT_URL+'?bookmarklet=1&data='+encodedData,'_blank');}).catch(err=>{document.body.removeChild(loadingDiv);alert('Error:
+                                            '+err.message);});})();" draggable="true" onclick="event.preventDefault();
+                                            alert('Drag this button to your bookmark bar!');">
+                                            <span class="bookmarklet-icon">📥</span>
+                                            <span>Get Subtitles</span>
+                        </a>
+                        <p class="bookmarklet-hint">
+                            💡 This extracts subtitles directly in your browser - no server needed!
+                        </p>
+                    </div>
+                </div>
+
                 <!-- Results -->
                 <div id="resultsSection" class="results hidden">
                     <!-- Meta bar -->
