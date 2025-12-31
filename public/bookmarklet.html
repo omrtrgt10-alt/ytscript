@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Subtitles Bookmarklet - YTScript</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: #888;
+            margin-bottom: 2rem;
+        }
+
+        .bookmarklet-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 36px;
+            background: linear-gradient(135deg, #0071e3, #5856d6);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(0, 113, 227, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .bookmarklet-btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(0, 113, 227, 0.5);
+        }
+
+        .instructions {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .instructions h2 {
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 12px;
+            color: #ccc;
+        }
+
+        .back-link {
+            margin-top: 2rem;
+            color: #0071e3;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📥 Get Subtitles</h1>
+        <p class="subtitle">Extract YouTube subtitles with one click</p>
+
+        <a id="bookmarklet" class="bookmarklet-btn" href="#">
+            ⬆️ Drag this to your Bookmark Bar
+        </a>
+
+        <div class="instructions">
+            <h2>How to Use</h2>
+            <ol>
+                <li><strong>Drag the button above</strong> to your browser's bookmark bar</li>
+                <li>Go to any <strong>YouTube video</strong></li>
+                <li>Click the <strong>"Get Subtitles"</strong> bookmark</li>
+                <li>Subtitles will be extracted and shown on YTScript!</li>
+            </ol>
+        </div>
+
+        <a href="/" class="back-link">← Back to YTScript</a>
+    </div>
+
+    <script>
+        // Set the bookmarklet href dynamically
+        const YTSCRIPT_URL = window.location.origin;
+        const code = `javascript:(function(){const U='${YTSCRIPT_URL}';if(!location.hostname.includes('youtube.com'))return alert('Open a YouTube video first!');const v=new URLSearchParams(location.search).get('v');if(!v)return alert('No video ID found');let p=window.ytInitialPlayerResponse;if(!p){for(let s of document.scripts){let m=s.textContent.match(/ytInitialPlayerResponse\\s*=\\s*(\\{.+?\\});/);if(m)try{p=JSON.parse(m[1]);break}catch(e){}}}if(!p)return alert('Could not get video data');const c=p.captions?.playerCaptionsTracklistRenderer?.captionTracks;if(!c||!c.length)return alert('No subtitles available');const t=c.find(x=>x.kind!='asr')||c[0];const l=document.createElement('div');l.style='position:fixed;inset:0;background:rgba(0,0,0,.9);display:flex;align-items:center;justify-content:center;z-index:99999;color:#fff;font-size:24px';l.textContent='Extracting...';document.body.appendChild(l);fetch(t.baseUrl).then(r=>r.text()).then(x=>{const s=[];const re=/<text start="([\\d.]+)"[^>]*>([^<]*)<\\/text>/g;let m;while(m=re.exec(x)){const txt=m[2].replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").trim();if(txt)s.push({start:+m[1],text:txt})}l.remove();if(!s.length)return alert('Could not parse subtitles');const d=btoa(unescape(encodeURIComponent(JSON.stringify({videoId:v,language:t.name?.simpleText||'Unknown',subtitles:s}))));open(U+'?bookmarklet=1&data='+d)}).catch(e=>{l.remove();alert('Error: '+e)})})();`;
+
+        document.getElementById('bookmarklet').href = code;
+        document.getElementById('bookmarklet').addEventListener('click', function (e) {
+            e.preventDefault();
+            alert('Drag this button to your bookmark bar, then use it on YouTube!');
+        });
+    </script>
+</body>
+
+</html>
