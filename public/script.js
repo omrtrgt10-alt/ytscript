@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initCookieConsent();
     loadHistory();
+    initBookmarklet();
 
     // Event listeners
     extractBtn.addEventListener('click', handleExtract);
@@ -137,6 +138,26 @@ function handleBookmarkletData() {
         showError('Invalid bookmarklet data');
         return true;
     }
+}
+
+// ==================== 
+// Initialize Bookmarklet Button
+// ====================
+function initBookmarklet() {
+    const bookmarkletBtn = document.getElementById('bookmarkletBtn');
+    if (!bookmarkletBtn) return;
+
+    // The bookmarklet code - will be set as href
+    const YTSCRIPT_URL = window.location.origin || 'https://ytscript.pages.dev';
+    const bookmarkletCode = `javascript:(function(){const YTSCRIPT_URL='${YTSCRIPT_URL}';if(!window.location.hostname.includes('youtube.com')){alert('Please use this on a YouTube video page!');return}const urlParams=new URLSearchParams(window.location.search);const videoId=urlParams.get('v');if(!videoId){alert('Could not find video ID.');return}let playerResponse=window.ytInitialPlayerResponse;if(!playerResponse){const scripts=document.getElementsByTagName('script');for(const script of scripts){const text=script.textContent;const match=text.match(/ytInitialPlayerResponse\\s*=\\s*(\\{[\\s\\S]*?\\});/);if(match){try{let jsonStr=match[1];let braceCount=0,endIdx=jsonStr.length;for(let i=0;i<jsonStr.length;i++){if(jsonStr[i]==='{')braceCount++;else if(jsonStr[i]==='}')braceCount--;if(braceCount===0&&i>0){endIdx=i+1;break}}playerResponse=JSON.parse(jsonStr.substring(0,endIdx));break}catch(e){}}}}if(!playerResponse){alert('Could not extract video data. Try refreshing.');return}const captionTracks=playerResponse?.captions?.playerCaptionsTracklistRenderer?.captionTracks;if(!captionTracks||captionTracks.length===0){alert('No subtitles available for this video.');return}const track=captionTracks.find(t=>t.kind!=='asr')||captionTracks[0];const captionUrl=track.baseUrl;const language=track.name?.simpleText||track.languageCode||'Unknown';const title=playerResponse?.videoDetails?.title||'Unknown';const loadingDiv=document.createElement('div');loadingDiv.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:999999;color:white;font-size:24px;font-family:sans-serif;';loadingDiv.innerHTML='Extracting...';document.body.appendChild(loadingDiv);fetch(captionUrl).then(res=>res.text()).then(xml=>{const subtitles=[];const regex=/<text start="([\\d.]+)"(?:\\s+dur="([\\d.]+)")?[^>]*>([^<]*)<\\/text>/g;let m;while((m=regex.exec(xml))!==null){const t=m[3].replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&#39;/g,"'").replace(/&quot;/g,'"').trim();if(t)subtitles.push({start:parseFloat(m[1]),dur:parseFloat(m[2]||'0'),text:t})}if(subtitles.length===0){document.body.removeChild(loadingDiv);alert('Could not parse captions.');return}const data={videoId,title,language,subtitles,timestamp:Date.now()};const encodedData=btoa(unescape(encodeURIComponent(JSON.stringify(data))));document.body.removeChild(loadingDiv);window.open(YTSCRIPT_URL+'?bookmarklet=1&data='+encodedData,'_blank')}).catch(err=>{document.body.removeChild(loadingDiv);alert('Error: '+err.message)})})();`;
+
+    bookmarkletBtn.href = bookmarkletCode;
+
+    // Prevent click - tell user to drag
+    bookmarkletBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        showToast('⬆️ Drag this button to your bookmark bar!', 'info');
+    });
 }
 
 // ==================== 
